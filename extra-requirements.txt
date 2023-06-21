@@ -1,0 +1,13 @@
+# Extra requirements
+# package[version_required]: tag1, tag2, ...
+flake8:                       testing
+pytest:                       testing
+pytest-cov:                   testing
+pytest-rerunfailures:         testing
+mkdocs-material:              docs
+mkdocstrings:                 docs
+mkdocstrings-python:          docs
+mkdocs-literate-nav:          docs
+mkdocs-gen-files:             docs
+mkdocs-section-index:         docs
+mkdocs-click:                 docs
