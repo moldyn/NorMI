@@ -1,53 +1,53 @@
-# Welcome to the `normalized-mi` Contributing Guide
+# Welcome to the `nmi` Contributing Guide
 
-This guide will give you an overview of the contribution workflow from opening an issue and creating a PR. To get an overview of the project, read the [module overview][normalized-mi].
+This guide will give you an overview of the contribution workflow from opening an issue and creating a PR. To get an overview of the project, read the [module overview][nmi].
 
 ## Issues
 
 ### Create a new issue
 
-If you spot a bug, want to request a new functionality, or have a question on how to use the module, please [search if an issue already exists](https://github.com/moldyn/normalized-mi/issues). If a related issue does not exist, feel free to [open a new issue](https://github.com/moldyn/normalized-mi/issues/new/choose).
+If you spot a bug, want to request a new functionality, or have a question on how to use the module, please [search if an issue already exists](https://github.com/moldyn/nmi/issues). If a related issue does not exist, feel free to [open a new issue](https://github.com/moldyn/nmi/issues/new/choose).
 
 ### Solve an issue
 
-If you want to contribute and do not how, feel free to scan through the [existing issues](https://github.com/moldyn/normalized-mi/issues).
+If you want to contribute and do not how, feel free to scan through the [existing issues](https://github.com/moldyn/nmi/issues).
 
 ## Create a new pull request
 ### Create a fork
 
-If you want to request a change, you first have to [fork the repository](https://github.com/moldyn/normalized-mi/fork).
+If you want to request a change, you first have to [fork the repository](https://github.com/moldyn/nmi/fork).
 
 ### Setup a development environment
 
 === "bash + conda"
 
     ``` bash
-    conda create -n normalized-mi -c conda-forge python
-    conda activate normalized-mi
+    conda create -n nmi -c conda-forge python
+    conda activate nmi
     python -m pip install -e .[all]
     ```
 
 === "bash + venv"
 
     ``` bash
-    python -m venv ./normalized-mi
-    source ./normalized-mi/bin/activate
+    python -m venv ./nmi
+    source ./nmi/bin/activate
     python -m pip install -e .[all]
     ```
 
 === "zsh + conda"
 
     ``` zsh
-    conda create -n normalized-mi -c conda-forge python
-    conda activate normalized-mi
+    conda create -n nmi -c conda-forge python
+    conda activate nmi
     python -m pip install -e .\[all]
     ```
 
 === "zsh + venv"
 
     ``` zsh
-    python -m venv ./normalized-mi
-    source ./normalized-mi/bin/activate
+    python -m venv ./nmi
+    source ./nmi/bin/activate
     python -m pip install -e .\[all]
     ```
 

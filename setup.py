@@ -57,7 +57,7 @@ README = remove_gh_dark_mode_only_tags(
 
 # This call to setup() does all the work
 setuptools.setup(
-    name='normalized-mi',
+    name='nmi',
     version='0.0.0',
     description='Estimator for Normalized Mutual Information',
     long_description=README,
@@ -69,7 +69,7 @@ setuptools.setup(
         'KSG Estimator',
     ],
     author='braniii',
-    url='https://github.com/moldyn/normalized-mi',
+    url='https://github.com/moldyn/nmi',
     license='MIT License',
     classifiers=[
         'License :: OSI Approved :: MIT License',
@@ -86,10 +86,10 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     project_urls={
-        'Documentation': 'https://moldyn.github.io/normalized-mi',
-        'Source Code': 'https://github.com/moldyn/normalized-mi',
-        'Changelog': 'https://moldyn.github.io/normalized-mi/changelog',
-        'Bug Tracker': 'https://github.com/moldyn/normalized-mi/issues',
+        'Documentation': 'https://moldyn.github.io/nmi',
+        'Source Code': 'https://github.com/moldyn/nmi',
+        'Changelog': 'https://moldyn.github.io/nmi/changelog',
+        'Bug Tracker': 'https://github.com/moldyn/nmi/issues',
     },
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where='src'),
@@ -97,7 +97,7 @@ setuptools.setup(
     python_requires='>=3.8',
     entry_points={
         'console_scripts': [
-            'normalized-mi = normalized-mi.__main__:main',
+            'nmi = nmi.__main__:main',
         ],
     },
     install_requires=[
