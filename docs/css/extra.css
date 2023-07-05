@@ -63,8 +63,8 @@ a[href^="https://"]::after
   display: inline-block;
 }
 
-a[href^="https://github.com/moldyn/MoSAIC"]::after,
-a[href^="https://moldyn.github.io/MoSAIC"]::after,
+a[href^="https://github.com/moldyn/nmi"]::after,
+a[href^="https://moldyn.github.io/nmi"]::after,
 a[href^="https://github.com/wemake-services"]::after,
 a[href^="https://pypi.org"]::after,
 a[href^="https://anaconda.org"]::after,

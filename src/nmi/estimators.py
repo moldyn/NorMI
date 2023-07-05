@@ -66,14 +66,12 @@ class NormalizedMI(BaseEstimator):
     >>> nmi.fit(data)
     NormalizedMI()
     >>> nmi.nmi_
-    array([[1.       , 0.9697832],
-           [0.9697832, 1.       ]])
+    array([[1.        , 0.79868365],
+           [0.79868365, 1.        ]])
 
     """
 
     _dtype: np.dtype = np.float64
-    _default_normalize_method: str = 'joint'
-    _default_n_dim: int = 1
     # todo add to __init__
     k = 5
     invariant_measure = 'radii'
@@ -82,14 +80,10 @@ class NormalizedMI(BaseEstimator):
     def __init__(
         self,
         *,
-        n_dim: Optional[PositiveInt] = None
-        normalize_method: Optional[NormString] = None,
+        n_dim: PositiveInt = 1,
+        normalize_method: NormString = 'joint',
     ):
         """Initialize NormalizedMI class."""
-        if normalize_method is None:
-            normalize_method = self._default_normalize_method
-        if n_dim is None:
-            n_dim = self._default_n_dim
         self.normalize_method: NormString = normalize_method
         self.n_dim: PositiveInt = n_dim
 
@@ -265,11 +259,17 @@ class NormalizedMI(BaseEstimator):
         hx: PositiveMatrix = np.empty_like(mi)
         hy: PositiveMatrix = np.empty_like(mi)
         for idx_i, xi in enumerate(X.T):
+            if self.n_dim == 1:
+                xi = xi.reshape(-1, 1)
+
             mi[idx_i, idx_i] = 1
             hxy[idx_i, idx_i] = 1
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
             for idx_j, xj in enumerate(X.T[idx_i + 1:], idx_i + 1):
+                if self.n_dim == 1:
+                    xj = xj.reshape(-1, 1)
+
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
                     xi, xj, n_neighbors=self.k,
                 )
