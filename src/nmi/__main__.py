@@ -8,7 +8,7 @@ All rights reserved.
 import click
 import numpy as np
 
-from nmi import NormalizedMI
+import nmi
 
 # setup matplotlibs rcParam
 
