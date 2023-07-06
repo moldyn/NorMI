@@ -211,7 +211,7 @@ class NormalizedMI(BaseEstimator):
 
     @beartype
     def nmi(
-        self, normalize_method: Optional[NormString] = None
+        self, normalize_method: Optional[NormString] = None,
     ) -> NormalizedMatrix:
         """Return the normalized mutual information matrix.
 
@@ -255,7 +255,7 @@ class NormalizedMI(BaseEstimator):
 
     @beartype
     def _kraskov_estimator(
-        self, X: Float2DArray
+        self, X: Float2DArray,
     ) -> Tuple[PositiveMatrix, PositiveMatrix, PositiveMatrix, PositiveMatrix]:
         """Estimate the mutual information and entropies matrices."""
         mi: PositiveMatrix = np.empty(  # noqa: WPS317
@@ -337,7 +337,7 @@ def kraskov_estimator(x, y, n_neighbors):
     nx, ny = [
         KDTree(z).query_ball_point(
             z, r=radii, return_length=True, **kdtree_kwargs,
-        ) - 1
+        ) - 1  # fix self count
         for z in (x, y)
     ]
 
@@ -345,11 +345,11 @@ def kraskov_estimator(x, y, n_neighbors):
     digamma_k = digamma(n_neighbors)
     digamma_nx = np.mean(digamma(nx + 1))
     digamma_ny = np.mean(digamma(ny + 1))
-
     mean_log_eps = np.mean(np.log(radii / np.mean(radii)))
-    mi = digamma_N + digamma_k - digamma_nx - digamma_ny
-    hxy = digamma_N - digamma_k + (dx + dy) * mean_log_eps
-    hx = digamma_N - digamma_nx + dx * mean_log_eps
-    hy = digamma_N - digamma_ny + dy * mean_log_eps
 
-    return mi, hxy, hx, hy
+    return (
+        digamma_N + digamma_k - digamma_nx - digamma_ny,  # mi
+        digamma_N - digamma_k + (dx + dy) * mean_log_eps,  # hxy
+        digamma_N - digamma_nx + dx * mean_log_eps,  # hx
+        digamma_N - digamma_ny + dy * mean_log_eps,  # hy
+    )
