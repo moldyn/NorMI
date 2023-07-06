@@ -3,6 +3,7 @@
 __all__ = ['NormalizedMI']
 
 NORMS = {'joint', 'geometric', 'arithmetic', 'min', 'max'}
+INVMEASURES = {'radius', 'volume', 'kraskov'}
 
 from ._estimators import NormalizedMI
 

@@ -12,7 +12,7 @@ All rights reserved.
 import numpy as np
 from beartype.typing import List, Union
 from beartype.vale import Is, IsAttr, IsEqual
-from nmi import NORMS
+from nmi import INVMEASURES, NORMS
 
 try:  # for python <= 3.8 use typing_extensions
     from beartype.typing import Annotated
@@ -58,6 +58,7 @@ IsDTypeLike = Is[lambda dtype: np.issubdtype(dtype, np.generic)]
 IsLessThanOne = Is[lambda arr: bool(np.all(arr <= 1))]
 IsMatrix = Is[lambda arr: arr.shape[0] == arr.shape[1]]
 IsNormString = Is[lambda val: val in NORMS]
+IsInvMeasureString = Is[lambda val: val in INVMEASURES]
 IsPositive = Is[lambda arr: bool(np.all(arr >= 0))]
 IsStrictlyPositive = Is[lambda arr: bool(np.all(arr > 0))]
 IsSymmetric = Is[lambda arr: _allclose(arr, arr.T)]
@@ -65,6 +66,7 @@ IsSymmetric = Is[lambda arr: _allclose(arr, arr.T)]
 # Define Types
 # String (enum-type) datatypes
 NormString = Annotated[str, IsNormString]
+InvMeasureString = Annotated[str, IsInvMeasureString]
 
 # scalar datatypes
 PositiveInt = Annotated[
