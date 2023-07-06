@@ -210,12 +210,15 @@ class NormalizedMI(BaseEstimator):
             del self.nmi_  # noqa: WPS420
 
     @beartype
-    def nmi(self, normalize_method: NormString) -> NormalizedMatrix:
+    def nmi(
+        self, normalize_method: Optional[NormString] = None
+    ) -> NormalizedMatrix:
         """Return the normalized mutual information matrix.
 
         Parameters
         ----------
-        normalize_method : str, default='joint'
+        normalize_method : str, default=None
+            If `None` use class definition.
             Determines the normalization factor for the mutual information:
             - `'joint'` is the joint entropy
             - `'max'` is the maximum of the individual entropies
@@ -231,6 +234,9 @@ class NormalizedMI(BaseEstimator):
 
         """
         check_is_fitted(self, attributes=['mi_', 'hxy_', 'hx_', 'hy_'])
+
+        if normalize_method is None:
+            normalize_method = self.normalize_method
 
         nmi_: np.ndarray
         if normalize_method == 'joint':

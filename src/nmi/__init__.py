@@ -4,7 +4,7 @@ __all__ = ['NormalizedMI']
 
 NORMS = {'joint', 'geometric', 'arithmetic', 'min', 'max'}
 
-from .estimators import NormalizedMI
+from ._estimators import NormalizedMI
 
 
 __version__ = '0.0.0'
