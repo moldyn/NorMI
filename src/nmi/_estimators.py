@@ -20,9 +20,11 @@ from sklearn.utils.validation import check_is_fitted
 from nmi._typing import (  # noqa: WPS436
     ArrayLikeFloat,
     Float,
-    FloatArray,
     Float2DArray,
+    FloatArray,
+    FloatMatrix,
     FloatMax2DArray,
+    InvMeasureString,
     NormalizedMatrix,
     NormString,
     PositiveInt,
@@ -35,16 +37,22 @@ class NormalizedMI(BaseEstimator):
 
     Parameters
     ----------
-    n_dim : int, default=1
+    n_dims : int, default=1
         Dimensionality of input vectors.
     normalize_method : str, default='joint'
-        Determines the normalization factor for the mutual information:
-        - `'joint'` is the joint entropy
-        - `'max'` is the maximum of the individual entropies
-        - `'arithmetic'` is the mean of the individual entropies
+        Determines the normalization factor for the mutual information:<br/>
+        - `'joint'` is the joint entropy<br/>
+        - `'max'` is the maximum of the individual entropies<br/>
+        - `'arithmetic'` is the mean of the individual entropies<br/>
         - `'geometric'` is the square root of the product of the individual
-          entropies
+          entropies<br/>
         - `'min'` is the minimum of the individual entropies
+    invariant_measure : str, default='radius'
+        - `'radius'` normalizing by mean k-nn radius<br/>
+        - `'volume'` normalizing by mean k-nn volume<br/>
+        - `'kraskov'` no normalization
+    k : int, default=5
+        Number of nearest neighbors to use in $k$-nn estimator.
 
     Attributes
     ----------
@@ -74,20 +82,21 @@ class NormalizedMI(BaseEstimator):
     """
 
     _dtype: np.dtype = np.float64
-    # todo add to __init__
-    k = 5
-    invariant_measure = 'radii'
 
     @beartype
     def __init__(
         self,
         *,
-        n_dim: PositiveInt = 1,
+        n_dims: PositiveInt = 1,
         normalize_method: NormString = 'joint',
+        invariant_measure: InvMeasureString = 'radius',
+        k: PositiveInt = 5,
     ):
         """Initialize NormalizedMI class."""
+        self.n_dims: PositiveInt = n_dims
         self.normalize_method: NormString = normalize_method
-        self.n_dim: PositiveInt = n_dim
+        self.invariant_measure: InvMeasureString = invariant_measure
+        self.k: PositiveInt = k
 
     @beartype
     def fit(
@@ -99,7 +108,7 @@ class NormalizedMI(BaseEstimator):
 
         Parameters
         ----------
-        X : ndarray of shape (n_samples, n_features x n_dim)
+        X : ndarray of shape (n_samples, n_features x n_dims)
             Training data.
         y : Ignored
             Not used, present for scikit API consistency by convention.
@@ -112,13 +121,13 @@ class NormalizedMI(BaseEstimator):
         """
         self._reset()
 
-
         # parse data
-        if X.ndim < 2 * self.n_dim:
+        if X.ndim < 2 * self.n_dims:
             raise ValueError('At least two variables need to be provided')
         stds = np.std(X, axis=0)
-        if np.any(stds == 0) or np.any(np.isnan(stds)):
-            idxs = np.where((stds == 0) | (np.isnan(stds)))[0]
+        invalid_stds = (stds == 0) | (np.isnan(stds))
+        if np.any(invalid_stds):
+            idxs = np.where(invalid_stds)[0]
             raise ValueError(
                 f'Columns {idxs} have a standard deviation of zero or NaN. '
                 'These columns cannot be used for estimating the NMI.'
@@ -129,24 +138,24 @@ class NormalizedMI(BaseEstimator):
         n_cols: int
         n_features: int
         n_samples, n_cols = X.shape
-        n_features = n_cols // self.n_dim
+        n_features = n_cols // self.n_dims
 
-        if n_cols != n_features * self.n_dim:
+        if n_cols != n_features * self.n_dims:
             raise ValueError(
                 'The number of provided columns needs to be a multiple of the '
-                'specified dimensionality `n_dim`.'
+                'specified dimensionality `n_dims`.'
             )
 
         self._n_samples: int = n_samples
         self._n_features: int = n_features
 
         # scale input
-        X = StandardScaler(copy=False).fit_transform(X)
+        X = StandardScaler().fit_transform(X)
 
         self.mi_: PositiveMatrix
-        self.hxy_: PositiveMatrix
-        self.hx_: PositiveMatrix
-        self.hy_: PositiveMatrix
+        self.hxy_: FloatMatrix
+        self.hx_: FloatMatrix
+        self.hy_: FloatMatrix
 
         self.mi_, self.hxy_, self.hx_, self.hy_ = self._kraskov_estimator(X)
 
@@ -166,7 +175,7 @@ class NormalizedMI(BaseEstimator):
 
         Parameters
         ----------
-        X : ndarray of shape (n_samples, n_features x n_dim)
+        X : ndarray of shape (n_samples, n_features x n_dims)
             Training data.
         y : Ignored
             Not used, present for scikit API consistency by convention.
@@ -258,16 +267,16 @@ class NormalizedMI(BaseEstimator):
     @beartype
     def _kraskov_estimator(
         self, X: Float2DArray,
-    ) -> Tuple[PositiveMatrix, PositiveMatrix, PositiveMatrix, PositiveMatrix]:
+    ) -> Tuple[PositiveMatrix, FloatMatrix, FloatMatrix, FloatMatrix]:
         """Estimate the mutual information and entropies matrices."""
         mi: PositiveMatrix = np.empty(  # noqa: WPS317
             (self._n_features, self._n_features), dtype=self._dtype,
         )
-        hxy: PositiveMatrix = np.empty_like(mi)
-        hx: PositiveMatrix = np.empty_like(mi)
-        hy: PositiveMatrix = np.empty_like(mi)
+        hxy: FloatMatrix = np.empty_like(mi)
+        hx: FloatMatrix = np.empty_like(mi)
+        hy: FloatMatrix = np.empty_like(mi)
         for idx_i, xi in enumerate(X.T):
-            if self.n_dim == 1:
+            if self.n_dims == 1:
                 xi = xi.reshape(-1, 1)
 
             mi[idx_i, idx_i] = 1
@@ -275,11 +284,14 @@ class NormalizedMI(BaseEstimator):
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
             for idx_j, xj in enumerate(X.T[idx_i + 1:], idx_i + 1):
-                if self.n_dim == 1:
+                if self.n_dims == 1:
                     xj = xj.reshape(-1, 1)
 
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
-                    xi, xj, n_neighbors=self.k,
+                    xi,
+                    xj,
+                    n_neighbors=self.k,
+                    invariant_measure=self.invariant_measure,
                 )
                 mi[idx_i, idx_j] = mi[idx_j, idx_i] = mi_ij
                 hxy[idx_i, idx_j] = hxy[idx_j, idx_i] = hxy_ij
@@ -289,9 +301,54 @@ class NormalizedMI(BaseEstimator):
         return mi, hxy, hx, hy
 
 
+def scale_nearest_neighbor_distance(
+    invariant_measure: InvMeasureString,
+    n_dims: PositiveInt,
+    radii: FloatArray,
+) -> FloatArray:
+    """Apply invariant measure rescaling to radii.
+
+    Parameters
+    ----------
+    invariant_measure : str, default='radius'
+        - `'radius'` normalizing by mean k-nn radius<br/>
+        - `'volume'` normalizing by mean k-nn volume<br/>
+        - `'kraskov'` no normalization
+    n_dims : int
+        Dimensionality of the embedding space used to estimate the radii.
+    radii : ndarray, shape (n_samples, )
+        $k$-NN radii of each sample.
+
+    Returns
+    -------
+    mi, hx, hy, hxy : float
+        Return estimates.
+
+    References
+    ----------
+    .. [1] A. Kraskov, H. Stogbauer and P. Grassberger, "Estimating mutual
+           information". Phys. Rev. E 69, 2004.
+
+    """
+    if invariant_measure == 'radius':
+        return radii / np.mean(radii)
+    elif invariant_measure == 'volume':
+        return radii / (
+            np.mean(radii ** n_dims) ** (1 / n_dims)
+        )
+    elif invariant_measure == 'kraskov':
+        return radii
+    raise NotImplementedError(
+        f'Selected invariant measure {invariant_measure} is not implemented.',
+    )
+
+
 def kraskov_estimator(
-    x: Float2DArray, y: Float2DArray, n_neighbors: PositiveInt,
-) -> Tuple[PositiveMatrix, PositiveMatrix, PositiveMatrix, PositiveMatrix]:
+    x: Float2DArray,
+    y: Float2DArray,
+    n_neighbors: PositiveInt,
+    invariant_measure: InvMeasureString,
+) -> Tuple[PositiveMatrix, FloatMatrix, FloatMatrix, FloatMatrix]:
     """Compute MI(X,Y), H(X), H(Y) and H(X,Y).
 
     Compute mutual information, marginal and joint continuous entropies between
@@ -305,6 +362,10 @@ def kraskov_estimator(
         shape.
     n_neighbors : int
         Number of nearest neighbors to search for each point, see [1]_.
+    invariant_measure : str, default='radius'
+        - `'radius'` normalizing by mean k-nn radius<br/>
+        - `'volume'` normalizing by mean k-nn volume<br/>
+        - `'kraskov'` no normalization
 
     Returns
     -------
@@ -350,11 +411,18 @@ def kraskov_estimator(
         for z in (x, y)
     ]
 
+    # scale radiis
+    radii = scale_nearest_neighbor_distance(
+        invariant_measure=invariant_measure,
+        n_dims=(dx + dy),
+        radii=radii,
+    )
+
     digamma_N: Float = digamma(n_samples)
     digamma_k: Float = digamma(n_neighbors)
     digamma_nx: Float = np.mean(digamma(nx + 1))
     digamma_ny: Float = np.mean(digamma(ny + 1))
-    mean_log_eps: Float = np.mean(np.log(radii / np.mean(radii)))
+    mean_log_eps: Float = np.mean(np.log(radii))
 
     return (
         digamma_N + digamma_k - digamma_nx - digamma_ny,  # mi
