@@ -10,21 +10,23 @@ __all__ = ['NormalizedMI']  # noqa: WPS410
 
 import numpy as np
 from beartype import beartype
-from beartype.typing import Callable, Tuple, Optional, Union
+from beartype.typing import Callable, Optional, Tuple, Union
+from scipy.spatial import KDTree
 from scipy.special import digamma
-from scipy.spatial import KDTree, kdtree
 from sklearn.base import BaseEstimator
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_is_fitted
 
 from nmi._typing import (  # noqa: WPS436
     ArrayLikeFloat,
+    Float,
+    FloatArray,
     Float2DArray,
     FloatMax2DArray,
     NormalizedMatrix,
     NormString,
-    PositiveMatrix,
     PositiveInt,
+    PositiveMatrix,
 )
 
 
@@ -287,7 +289,9 @@ class NormalizedMI(BaseEstimator):
         return mi, hxy, hx, hy
 
 
-def kraskov_estimator(x, y, n_neighbors):
+def kraskov_estimator(
+    x: Float2DArray, y: Float2DArray, n_neighbors: PositiveInt,
+) -> Tuple[PositiveMatrix, PositiveMatrix, PositiveMatrix, PositiveMatrix]:
     """Compute MI(X,Y), H(X), H(Y) and H(X,Y).
 
     Compute mutual information, marginal and joint continuous entropies between
@@ -313,6 +317,9 @@ def kraskov_estimator(x, y, n_neighbors):
            information". Phys. Rev. E 69, 2004.
 
     """
+    n_samples: int
+    dx: int
+    dy: int
     n_samples, dx = x.shape
     _, dy = y.shape
     xy = np.hstack((x, y))
@@ -321,19 +328,21 @@ def kraskov_estimator(x, y, n_neighbors):
 
     # Here we rely on NearestNeighbors to select the fastest algorithm.
     tree = KDTree(xy)
-    radii = tree.query(
+    radii: FloatArray = tree.query(
         xy, k=n_neighbors + 1, **kdtree_kwargs,
     )[0][:, 1:]  # neglect self count
     # take next smaller radii
-    radii = np.nextafter(radii[:, -1], 0)
+    radii: FloatArray = np.nextafter(radii[:, -1], 0)
 
     # enforce to be strictly larger than 0
-    radii = np.where(
+    radii: FloatArray = np.where(
         radii == 0,
         np.finfo(radii.dtype).resolution,
         radii,
     )
 
+    nx: FloatArray
+    ny: FloatArray
     nx, ny = [
         KDTree(z).query_ball_point(
             z, r=radii, return_length=True, **kdtree_kwargs,
@@ -341,11 +350,11 @@ def kraskov_estimator(x, y, n_neighbors):
         for z in (x, y)
     ]
 
-    digamma_N = digamma(n_samples)
-    digamma_k = digamma(n_neighbors)
-    digamma_nx = np.mean(digamma(nx + 1))
-    digamma_ny = np.mean(digamma(ny + 1))
-    mean_log_eps = np.mean(np.log(radii / np.mean(radii)))
+    digamma_N: Float = digamma(n_samples)
+    digamma_k: Float = digamma(n_neighbors)
+    digamma_nx: Float = np.mean(digamma(nx + 1))
+    digamma_ny: Float = np.mean(digamma(ny + 1))
+    mean_log_eps: Float = np.mean(np.log(radii / np.mean(radii)))
 
     return (
         digamma_N + digamma_k - digamma_nx - digamma_ny,  # mi

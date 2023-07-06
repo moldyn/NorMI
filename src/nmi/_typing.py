@@ -80,6 +80,7 @@ DTypeLike = Annotated[type, IsDTypeLike]
 # array datatypes
 FloatNDArray = Annotated[np.ndarray, DType[np.floating]]
 ArrayLikeFloat = Union[List[float], FloatNDArray]
+FloatArray = Annotated[FloatNDArray, NDim[2]]
 Float2DArray = Annotated[FloatNDArray, NDim[2]]
 FloatMatrix = Annotated[Float2DArray, IsMatrix]
 PositiveMatrix = Annotated[FloatMatrix, IsPositive]
