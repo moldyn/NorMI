@@ -292,7 +292,8 @@ class NormalizedMI(BaseEstimator):
         return mi, hxy, hx, hy
 
 
-def scale_nearest_neighbor_distance(
+@beartype
+def _scale_nearest_neighbor_distance(
     invariant_measure: InvMeasureString,
     n_dims: PositiveInt,
     radii: FloatArray,
@@ -329,11 +330,13 @@ def scale_nearest_neighbor_distance(
         )
     elif invariant_measure == 'kraskov':
         return radii
-    raise NotImplementedError(
+    # This should never be reached
+    raise NotImplementedError(  # no cover
         f'Selected invariant measure {invariant_measure} is not implemented.',
     )
 
 
+@beartype
 def kraskov_estimator(
     x: Float2DArray,
     y: Float2DArray,
@@ -403,7 +406,7 @@ def kraskov_estimator(
     ]
 
     # scale radiis
-    radii = scale_nearest_neighbor_distance(
+    radii = _scale_nearest_neighbor_distance(
         invariant_measure=invariant_measure,
         n_dims=(dx + dy),
         radii=radii,
@@ -422,7 +425,7 @@ def kraskov_estimator(
         digamma_N - digamma_ny + dy * mean_log_eps,  # hy
     )
 
-
+@beartype
 def _check_X(X: Float2DArray, n_dims: PositiveInt):
     """Sanity check of the input to ensure correct format and dimension."""
     # parse data
