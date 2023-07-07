@@ -10,7 +10,7 @@ __all__ = ['NormalizedMI']  # noqa: WPS410
 
 import numpy as np
 from beartype import beartype
-from beartype.typing import Callable, Optional, Tuple, Union
+from beartype.typing import Callable, List, Optional, Tuple, Union
 from scipy.spatial import KDTree
 from scipy.special import digamma
 from sklearn.base import BaseEstimator
@@ -126,36 +126,19 @@ class NormalizedMI(BaseEstimator):
         """
         self._reset()
 
-        # parse data
-        if X.ndim < 2 * self.n_dims:
-            raise ValueError('At least two variables need to be provided')
-        stds = np.std(X, axis=0)
-        invalid_stds = (stds == 0) | (np.isnan(stds))
-        if np.any(invalid_stds):
-            idxs = np.where(invalid_stds)[0]
-            raise ValueError(
-                f'Columns {idxs} have a standard deviation of zero or NaN. '
-                'These columns cannot be used for estimating the NMI.'
-            )
+        _check_X(X=X, n_dims=self.n_dims)
 
         # define number of features and samples
         n_samples: int
         n_cols: int
         n_features: int
         n_samples, n_cols = X.shape
-        n_features = n_cols // self.n_dims
-
-        if n_cols != n_features * self.n_dims:
-            raise ValueError(
-                'The number of provided columns needs to be a multiple of the '
-                'specified dimensionality `n_dims`.'
-            )
-
         self._n_samples: int = n_samples
-        self._n_features: int = n_features
+        self._n_features: int = n_cols // self.n_dims
 
         # scale input
         X = StandardScaler().fit_transform(X)
+        X = np.split(X, self._n_features, axis=1)
 
         self.mi_: PositiveMatrix
         self.hxy_: FloatMatrix
@@ -271,7 +254,7 @@ class NormalizedMI(BaseEstimator):
 
     @beartype
     def _kraskov_estimator(
-        self, X: Float2DArray,
+        self, X: List[Float2DArray],
     ) -> Tuple[PositiveMatrix, FloatMatrix, FloatMatrix, FloatMatrix]:
         """Estimate the mutual information and entropies matrices."""
         mi: PositiveMatrix = np.empty(  # noqa: WPS317
@@ -287,18 +270,12 @@ class NormalizedMI(BaseEstimator):
             desc='NMI Estimation:',
         )
 
-        for idx_i, xi in enumerate(X.T):
-            if self.n_dims == 1:
-                xi = xi.reshape(-1, 1)
-
+        for idx_i, xi in enumerate(X):
             mi[idx_i, idx_i] = 1
             hxy[idx_i, idx_i] = 1
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
-            for idx_j, xj in enumerate(X.T[idx_i + 1:], idx_i + 1):
-                if self.n_dims == 1:
-                    xj = xj.reshape(-1, 1)
-
+            for idx_j, xj in enumerate(X[idx_i + 1:], idx_i + 1):
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
                     xi,
                     xj,
@@ -444,3 +421,26 @@ def kraskov_estimator(
         digamma_N - digamma_nx + dx * mean_log_eps,  # hx
         digamma_N - digamma_ny + dy * mean_log_eps,  # hy
     )
+
+
+def _check_X(X: Float2DArray, n_dims: PositiveInt):
+    """Sanity check of the input to ensure correct format and dimension."""
+    # parse data
+    if X.ndim < 2 * n_dims:
+        raise ValueError('At least two variables need to be provided')
+    stds = np.std(X, axis=0)
+    invalid_stds = (stds == 0) | (np.isnan(stds))
+    if np.any(invalid_stds):
+        idxs = np.where(invalid_stds)[0]
+        raise ValueError(
+            f'Columns {idxs} have a standard deviation of zero or NaN. '
+            'These columns cannot be used for estimating the NMI.',
+        )
+
+    _, n_cols = X.shape
+    n_features = n_cols // n_dims
+    if n_cols != n_features * n_dims:
+        raise ValueError(
+            'The number of provided columns needs to be a multiple of the '
+            'specified dimensionality `n_dims`.',
+        )
