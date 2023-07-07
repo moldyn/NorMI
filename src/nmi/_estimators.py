@@ -16,6 +16,7 @@ from scipy.special import digamma
 from sklearn.base import BaseEstimator
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_is_fitted
+from tqdm import tqdm
 
 from nmi._typing import (  # noqa: WPS436
     ArrayLikeFloat,
@@ -53,6 +54,8 @@ class NormalizedMI(BaseEstimator):
         - `'kraskov'` no normalization
     k : int, default=5
         Number of nearest neighbors to use in $k$-nn estimator.
+    verbose : bool, default=True
+        Setting verbose mode.
 
     Attributes
     ----------
@@ -91,12 +94,14 @@ class NormalizedMI(BaseEstimator):
         normalize_method: NormString = 'joint',
         invariant_measure: InvMeasureString = 'radius',
         k: PositiveInt = 5,
+        verbose: bool = True,
     ):
         """Initialize NormalizedMI class."""
         self.n_dims: PositiveInt = n_dims
         self.normalize_method: NormString = normalize_method
         self.invariant_measure: InvMeasureString = invariant_measure
         self.k: PositiveInt = k
+        self.verbose: bool = True
 
     @beartype
     def fit(
@@ -275,6 +280,13 @@ class NormalizedMI(BaseEstimator):
         hxy: FloatMatrix = np.empty_like(mi)
         hx: FloatMatrix = np.empty_like(mi)
         hy: FloatMatrix = np.empty_like(mi)
+
+        pb = tqdm(
+            total=int(self._n_features * (self._n_features - 1) / 2),
+            disable=not self.verbose,
+            desc='NMI Estimation:',
+        )
+
         for idx_i, xi in enumerate(X.T):
             if self.n_dims == 1:
                 xi = xi.reshape(-1, 1)
@@ -297,6 +309,8 @@ class NormalizedMI(BaseEstimator):
                 hxy[idx_i, idx_j] = hxy[idx_j, idx_i] = hxy_ij
                 hx[idx_i, idx_j] = hx[idx_j, idx_i] = hx_ij
                 hy[idx_i, idx_j] = hy[idx_j, idx_i] = hy_ij
+
+                pb.update()
 
         return mi, hxy, hx, hy
 

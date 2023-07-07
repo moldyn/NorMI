@@ -107,6 +107,7 @@ setuptools.setup(
         'scikit-learn>=1.0.2',
         'beartype>=0.10.4',
         'decorit',
+        'tqdm',
     ],
     extras_require=get_extra_requirements('extra-requirements.txt'),
 )
