@@ -75,6 +75,10 @@ PositiveInt = Annotated[
 ]
 Int = Union[int, np.integer]
 Float = Union[float, np.floating]
+PositiveFloat = Annotated[
+    Union[float, np.floating],
+    IsStrictlyPositive,
+]
 
 # beartype substitute for np.typing.DTypeLike
 DTypeLike = Annotated[type, IsDTypeLike]

@@ -29,6 +29,7 @@ from nmi._typing import (  # noqa: WPS436
     NormalizedMatrix,
     NormString,
     PositiveInt,
+    PositiveFloat,
     PositiveMatrix,
 )
 
@@ -342,7 +343,7 @@ def kraskov_estimator(
     y: Float2DArray,
     n_neighbors: PositiveInt,
     invariant_measure: InvMeasureString,
-) -> Tuple[PositiveMatrix, FloatMatrix, FloatMatrix, FloatMatrix]:
+) -> Tuple[PositiveFloat, Float, Float, Float]:
     """Compute MI(X,Y), H(X), H(Y) and H(X,Y).
 
     Compute mutual information, marginal and joint continuous entropies between
