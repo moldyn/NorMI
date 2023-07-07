@@ -267,7 +267,7 @@ class NormalizedMI(BaseEstimator):
         pb = tqdm(
             total=int(self._n_features * (self._n_features - 1) / 2),
             disable=not self.verbose,
-            desc='NMI Estimation:',
+            desc='NMI Estimation',
         )
 
         for idx_i, xi in enumerate(X):
