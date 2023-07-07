@@ -132,7 +132,6 @@ class NormalizedMI(BaseEstimator):
         # define number of features and samples
         n_samples: int
         n_cols: int
-        n_features: int
         n_samples, n_cols = X.shape
         self._n_samples: int = n_samples
         self._n_features: int = n_cols // self.n_dims
@@ -425,6 +424,7 @@ def kraskov_estimator(
         digamma_N - digamma_nx + dx * mean_log_eps,  # hx
         digamma_N - digamma_ny + dy * mean_log_eps,  # hy
     )
+
 
 @beartype
 def _check_X(X: Float2DArray, n_dims: PositiveInt):
