@@ -426,7 +426,7 @@ def kraskov_estimator(
 def _check_X(X: Float2DArray, n_dims: PositiveInt):
     """Sanity check of the input to ensure correct format and dimension."""
     # parse data
-    if X.ndim < 2 * n_dims:
+    if X.shape[1] < 2 * n_dims:
         raise ValueError('At least two variables need to be provided')
     stds = np.std(X, axis=0)
     invalid_stds = (stds == 0) | (np.isnan(stds))

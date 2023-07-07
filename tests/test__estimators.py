@@ -11,6 +11,7 @@ import pytest
 from beartype.roar import BeartypeException
 
 from nmi import NormalizedMI
+from nmi import _estimators as estimators
 
 
 def X1():
@@ -39,6 +40,21 @@ def X1_result(method, measure):
         ('geometric', 'radius'): 1,
         ('geometric', 'volume'): 1,
     }[(method, measure)]
+
+
+@pytest.mark.parametrize('X, n_dims, error', [
+    (np.random.uniform(size=(10, 9)), 1, None),
+    (np.random.uniform(size=(10, 9)), 3, None),
+    (np.random.uniform(size=(10, 9)), 2, ValueError),
+    (np.zeros((10, 9)), 1, ValueError),
+    (np.vander((1, 2, 3, 4), 3), 1, ValueError),
+])
+def test__check_X(X, n_dims, error):
+    if error is None:
+        estimators._check_X(X, n_dims)
+    else:
+        with pytest.raises(error):
+            estimators._check_X(X, n_dims)
 
 
 @pytest.mark.parametrize('normalize_method, X, kwargs', [
