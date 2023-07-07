@@ -28,8 +28,8 @@ from nmi._typing import (  # noqa: WPS436
     InvMeasureString,
     NormalizedMatrix,
     NormString,
-    PositiveInt,
     PositiveFloat,
+    PositiveInt,
     PositiveMatrix,
 )
 
