@@ -75,8 +75,8 @@ Copyright (c) 2023, Daniel Nagel
     show_default=True,
     type=click.IntRange(min=1),
     help=(
-        'Dimension of each feature. Assumes the first nth colums belong to the '
-        'first feature.'
+        'Dimension of each feature. Assumes the first nth colums belong to the'
+        ' first feature.'
     ),
 )
 @click.option(
