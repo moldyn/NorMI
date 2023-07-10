@@ -102,7 +102,7 @@ class NormalizedMI(BaseEstimator):
         self.normalize_method: NormString = normalize_method
         self.invariant_measure: InvMeasureString = invariant_measure
         self.k: PositiveInt = k
-        self.verbose: bool = True
+        self.verbose: bool = verbose
 
     @beartype
     def fit(
