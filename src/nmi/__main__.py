@@ -101,7 +101,7 @@ def main(
     # load file
     if verbose:
         click.echo(f'\nNormalized MI\n~~~ Load file: {input_file}')
-    input = np.loadtxt(input_file, dtype=PRECISION_TO_DTYPE[precision])
+    features = np.loadtxt(input_file, dtype=PRECISION_TO_DTYPE[precision])
 
     if verbose:
         click.echo('~~~ Initialize class')
@@ -113,7 +113,7 @@ def main(
     )
     if verbose:
         click.echo('~~~ Fit class')
-    nmi.fit(input)
+    nmi.fit(features)
 
     # save results
     if verbose:
