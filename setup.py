@@ -108,6 +108,7 @@ setuptools.setup(
         'beartype>=0.10.4',
         'decorit',
         'tqdm',
+        'typing_extensions>=3.9.0;python_version<"3.9"',
     ],
     extras_require=get_extra_requirements('extra-requirements.txt'),
 )
