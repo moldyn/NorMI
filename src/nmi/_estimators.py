@@ -25,6 +25,7 @@ from nmi._typing import (  # noqa: WPS436
     FloatArray,
     FloatMatrix,
     FloatMax2DArray,
+    Int,
     InvMeasureString,
     NormalizedMatrix,
     NormString,
@@ -55,6 +56,8 @@ class NormalizedMI(BaseEstimator):
         - `'kraskov'` no normalization
     k : int, default=5
         Number of nearest neighbors to use in $k$-nn estimator.
+    n_jobs; int, default=-1
+        Number of jobs to use, `-1` uses as many as cores are available.
     verbose : bool, default=True
         Setting verbose mode.
 
@@ -95,6 +98,7 @@ class NormalizedMI(BaseEstimator):
         normalize_method: NormString = 'joint',
         invariant_measure: InvMeasureString = 'radius',
         k: PositiveInt = 5,
+        n_jobs: Int = -1,
         verbose: bool = True,
     ):
         """Initialize NormalizedMI class."""
@@ -103,6 +107,7 @@ class NormalizedMI(BaseEstimator):
         self.invariant_measure: InvMeasureString = invariant_measure
         self.k: PositiveInt = k
         self.verbose: bool = verbose
+        self.n_jobs: Int = n_jobs
 
     @beartype
     def fit(
@@ -281,6 +286,7 @@ class NormalizedMI(BaseEstimator):
                     xj,
                     n_neighbors=self.k,
                     invariant_measure=self.invariant_measure,
+                    n_jobs=self.n_jobs,
                 )
                 mi[idx_i, idx_j] = mi[idx_j, idx_i] = mi_ij
                 hxy[idx_i, idx_j] = hxy[idx_j, idx_i] = hxy_ij
@@ -342,6 +348,7 @@ def kraskov_estimator(
     y: Float2DArray,
     n_neighbors: PositiveInt,
     invariant_measure: InvMeasureString,
+    n_jobs: Int,
 ) -> Tuple[PositiveFloat, Float, Float, Float]:
     """Compute MI(X,Y), H(X), H(Y) and H(X,Y).
 
@@ -360,6 +367,8 @@ def kraskov_estimator(
         - `'radius'` normalizing by mean k-nn radius<br/>
         - `'volume'` normalizing by mean k-nn volume<br/>
         - `'kraskov'` no normalization
+    n_jobs : int
+        Number of jobs to use.
 
     Returns
     -------
@@ -379,7 +388,7 @@ def kraskov_estimator(
     _, dy = y.shape
     xy = np.hstack((x, y))
 
-    kdtree_kwargs = {'p': np.inf, 'workers': -1}
+    kdtree_kwargs = {'p': np.inf, 'workers': n_jobs}
 
     # Here we rely on NearestNeighbors to select the fastest algorithm.
     tree = KDTree(xy)
