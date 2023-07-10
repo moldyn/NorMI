@@ -54,6 +54,7 @@ If you use this software package, please cite the above mentioned paper.
 - Extensive [documentation](https://moldyn.github.io/nmi) and detailed discussion in publication
 
 ## Installation
+<!--
 The package is called `nmi` and is available via [PyPI](https://pypi.org/project/nmi) or [conda](https://anaconda.org/conda-forge/nmi). To install it, simply call:
 ```bash
 python3 -m pip install --upgrade nmi
@@ -62,8 +63,9 @@ or
 ```
 conda install -c conda-forge nmi
 ```
-
 or for the latest dev version
+-->
+The package is not yet published and only available directly from github
 ```bash
 # via ssh key
 python3 -m pip install git+ssh://git@github.com/moldyn/nmi.git
