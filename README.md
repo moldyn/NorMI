@@ -14,7 +14,7 @@
     <a href="https://anaconda.org/conda-forge/nmi" alt="conda version">
 	<img src="https://img.shields.io/conda/vn/conda-forge/nmi" /></a>
     <a href="https://pepy.tech/project/nmi" alt="Downloads">
-        <img src="https://pepy.tech/badge/nmi" /></a>
+        <img src="https://static.pepy.tech/badge/nmi" /></a>
     <a href="https://github.com/moldyn/nmi/actions/workflows/pytest.yml" alt="GitHub Workflow Status">
         <img src="https://img.shields.io/github/actions/workflow/status/moldyn/nmi/pytest.yml?branch=main"></a>
     <a href="https://codecov.io/gh/moldyn/nmi" alt="Code coverage">
