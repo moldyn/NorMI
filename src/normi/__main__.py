@@ -8,8 +8,8 @@ All rights reserved.
 import click
 import numpy as np
 
-from nmi import INVMEASURES, NORMS, NormalizedMI, __version__
-from nmi._utils import savetxt
+from normi import INVMEASURES, NORMS, NormalizedMI, __version__
+from normi._utils import savetxt
 
 # setup matplotlibs rcParam
 

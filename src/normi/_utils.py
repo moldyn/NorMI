@@ -17,7 +17,7 @@ import numpy as np
 from beartype import beartype
 from beartype.typing import Optional
 
-from nmi._typing import (  # noqa: WPS436
+from normi._typing import (  # noqa: WPS436
     FloatMax2DArray,
 )
 

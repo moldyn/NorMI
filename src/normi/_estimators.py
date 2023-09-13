@@ -18,7 +18,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_is_fitted
 from tqdm import tqdm
 
-from nmi._typing import (  # noqa: WPS436
+from normi._typing import (  # noqa: WPS436
     ArrayLikeFloat,
     Float,
     Float2DArray,
