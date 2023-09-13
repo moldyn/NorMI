@@ -12,7 +12,7 @@ All rights reserved.
 import numpy as np
 from beartype.typing import List, Union
 from beartype.vale import Is, IsAttr, IsEqual
-from nmi import INVMEASURES, NORMS
+from normi import INVMEASURES, NORMS
 
 try:  # for python <= 3.8 use typing_extensions
     from beartype.typing import Annotated
