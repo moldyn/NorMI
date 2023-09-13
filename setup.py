@@ -106,6 +106,7 @@ setuptools.setup(
         'click>=8.0.0',
         'beartype>=0.10.4',
         'tqdm',
+        'scikit-learn>=1.0.0',
         'typing_extensions>=3.9.0;python_version<"3.9"',
     ],
     extras_require=get_extra_requirements('extra-requirements.txt'),

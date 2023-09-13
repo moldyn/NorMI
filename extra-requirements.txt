@@ -5,7 +5,6 @@ wemake-python-styleguide:     coding
 pytest:                       testing
 pytest-cov:                   testing
 pytest-rerunfailures:         testing
-scikit-learn:                 testing
 mkdocs-material:              docs
 mkdocstrings:                 docs
 mkdocstrings-python:          docs
