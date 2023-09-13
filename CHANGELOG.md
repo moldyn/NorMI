@@ -16,9 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [0.1.0] - 2023-06-??
+## [0.1.0] - 2023-09-13
 - Initial release 🎉
 
 
-[Unreleased]: https://github.com/moldyn/msmhelper/compare/v0.1.0...main
-[0.1.0]: https://github.com/moldyn/msmhelper/tree/v0.1.0
+[Unreleased]: https://github.com/moldyn/normi/compare/v0.1.0...main
+[0.1.0]: https://github.com/moldyn/normi/tree/v0.1.0

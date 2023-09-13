@@ -57,8 +57,8 @@ README = remove_gh_dark_mode_only_tags(
 
 # This call to setup() does all the work
 setuptools.setup(
-    name='nmi',
-    version='0.0.0',
+    name='normi',
+    version='0.1.0',
     description='Estimator for Normalized Mutual Information',
     long_description=README,
     long_description_content_type='text/markdown',
@@ -69,7 +69,7 @@ setuptools.setup(
         'KSG Estimator',
     ],
     author='braniii',
-    url='https://github.com/moldyn/nmi',
+    url='https://github.com/moldyn/NorMI',
     license='MIT License',
     classifiers=[
         'License :: OSI Approved :: MIT License',
@@ -86,10 +86,10 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     project_urls={
-        'Documentation': 'https://moldyn.github.io/nmi',
-        'Source Code': 'https://github.com/moldyn/nmi',
-        'Changelog': 'https://moldyn.github.io/nmi/changelog',
-        'Bug Tracker': 'https://github.com/moldyn/nmi/issues',
+        'Documentation': 'https://moldyn.github.io/NorMI',
+        'Source Code': 'https://github.com/moldyn/NorMI',
+        'Changelog': 'https://moldyn.github.io/NorMI/changelog',
+        'Bug Tracker': 'https://github.com/moldyn/NorMI/issues',
     },
     package_dir={'': 'src'},
     packages=setuptools.find_packages(where='src'),
@@ -97,7 +97,7 @@ setuptools.setup(
     python_requires='>=3.8',
     entry_points={
         'console_scripts': [
-            'nmi = nmi.__main__:main',
+            'normi = normi.__main__:main',
         ],
     },
     install_requires=[

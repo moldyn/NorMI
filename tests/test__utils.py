@@ -12,7 +12,7 @@ import numpy as np
 import pytest
 from numpy.testing import assert_array_almost_equal
 
-from nmi import _utils
+from normi import _utils
 
 # Current directory
 HERE = os.path.dirname(__file__)

@@ -76,7 +76,7 @@ class NormalizedMI(BaseEstimator):
 
     Examples
     --------
-    >>> from nmi import NormalizedMI
+    >>> from normi import NormalizedMI
     >>> x = np.linspace(0, np.pi, 1000)
     >>> data = np.array([np.cos(x), np.cos(x + np.pi / 6)]).T
     >>> nmi = NormalizedMI()

@@ -12,8 +12,8 @@ from beartype.roar import BeartypeException
 from numpy.testing import assert_almost_equal, assert_array_almost_equal
 from sklearn.datasets import make_moons
 
-from nmi import NormalizedMI
-from nmi import _estimators as estimators
+from normi import NormalizedMI
+from normi import _estimators as estimators
 
 
 def X1():
