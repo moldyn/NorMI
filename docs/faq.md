@@ -1,7 +1,7 @@
 # Frequently Asked Questions
 
 ### Should I upgrade the package?
-You can check out the CHANGELOG.md to see what changed.
+You can check out the [CHANGELOG.md](../changelog) to see what changed.
 
 ### How can I interpret the results?
 Check out our publication for two detailed examples.

@@ -1,12 +1,12 @@
-site_name: "normalized MI"
+site_name: "NorMI"
 site_description: "Normalized mutual information estimator"
-site_url: "https://moldyn.github.io/nmi"
-repo_url: "https://github.com/moldyn/nmi"
+site_url: "https://moldyn.github.io/normi"
+repo_url: "https://github.com/moldyn/normi"
 edit_uri: "blob/main/docs/"
-repo_name: "moldyn/nmi"
+repo_name: "moldyn/normi"
 site_dir: "site"
 copyright: Copyright &copy; 2023 Daniel Nagel
-watch: [src/nmi]
+watch: [src/normi]
 
 nav:
 - Home:
