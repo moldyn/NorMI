@@ -41,8 +41,8 @@
 # NorMI: Nonparametric Normalized Mutual Information Estimator Based on $k$-NN Statistics
 This software provides an extension to the Kraskov-Estimator to allow normalizing the mutual information.
 
-The method will be published soon:
-> **Nonparametric Normalized Mutual Information Estimator to Identify Functional Dynamics in Proteins**  
+The method will be published soon as:
+> **Adaptive Entropy-Based Normalization for (High-Dimensional) Mutual Information**
 > D. Nagel, G. Diez, and G. Stock,  
 
 If you use this software package, please cite the above mentioned paper.
