@@ -78,7 +78,7 @@ python3 -m pip install git+https://github.com/moldyn/normi.git
 Using the `bash`, `zsh` or `fish` shell click provides an easy way to provide shell completion, checkout the [docs](https://click.palletsprojects.com/en/8.0.x/shell-completion).
 In the case of bash you need to add following line to your `~/.bashrc`
 ```bash
-eval "$(_NORMALIZED_MI_COMPLETE=bash_source normi)"
+eval "$(_NORMI_COMPLETE=bash_source normi)"
 ```
 
 ## Usage
