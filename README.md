@@ -42,8 +42,8 @@
 This software provides an extension to the Kraskov-Estimator to allow normalizing the mutual information.
 
 The method will be published soon as:
-> **Adaptive Entropy-Based Normalization for (High-Dimensional) Mutual Information**
-> D. Nagel, G. Diez, and G. Stock,  
+> **Adaptive Entropy-Based Normalization for (High-Dimensional) Mutual Information**  
+> D. Nagel, G. Diez, and G. Stock,  in prep.
 
 If you use this software package, please cite the above mentioned paper.
 
