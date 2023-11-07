@@ -30,15 +30,15 @@
   </p>
 
   <p>
-    <a href="https://moldyn.github.io/normi">Docs</a> •
+    <a href="https://moldyn.github.io/NorMI">Docs</a> •
     <a href="#features">Features</a> •
     <a href="#installation">Installation</a> •
     <a href="#usage">Usage</a> •
-    <a href="https://moldyn.github.io/normi/faq">FAQ</a>
+    <a href="https://moldyn.github.io/NorMI/faq">FAQ</a>
   </p>
 </div>
 
-# NorMI: Nonparametric Normalized Mutual Information Estimator Based on $k$-NN Statistics
+# NorMI: Nonparametric Normalized Mutual Information Estimator Based on *k*-NN Statistics
 This software provides an extension to the Kraskov-Estimator to allow normalizing the mutual information.
 
 The method will be published soon as:
@@ -51,10 +51,9 @@ If you use this software package, please cite the above mentioned paper.
 - Intuitive usage via [module](#module---inside-a-python-script) and via [CI](#ci---usage-directly-from-the-command-line)
 - Sklearn-style API for fast integration into your Python workflow
 - No magic, only a  single parameter which can be optimized via cross-validation
-- Extensive [documentation](https://moldyn.github.io/normi) and detailed discussion in publication
+- Extensive [documentation](https://moldyn.github.io/NorMI) and detailed discussion in publication
 
 ## Installation
-<!--
 The package is called `normi` and is available via [PyPI](https://pypi.org/project/normi) or [conda](https://anaconda.org/conda-forge/normi). To install it, simply call:
 ```bash
 python3 -m pip install --upgrade normi
@@ -64,14 +63,12 @@ or
 conda install -c conda-forge normi
 ```
 or for the latest dev version
--->
-The package is not yet published and only available directly from github
 ```bash
 # via ssh key
-python3 -m pip install git+ssh://git@github.com/moldyn/normi.git
+python3 -m pip install git+ssh://git@github.com/moldyn/NorMI.git
 
 # or via password-based login
-python3 -m pip install git+https://github.com/moldyn/normi.git
+python3 -m pip install git+https://github.com/moldyn/NorMI.git
 ```
 
 ### Shell Completion
@@ -86,10 +83,16 @@ In general one can call the module directly by its entry point `$ normi` or by c
 
 ### CI - Usage Directly from the Command Line
 The module brings a rich CI using [click](https://click.palletsprojects.com).
-Each module and submodule contains a detailed help, which can be accessed by
-...
+For a complete list of all options please see the
+[docs](https://moldyn.github.io/NorMI/reference/cli/).
+```bash
+python -m normi /
+  --input input_file  / # ascii file of shape (n_samples, n_features)
+  --output output_file  / # creates ascii file of shape (n_features, n_features)
+  --n-dims / # this allows to treat every n_dims columns as a high dimensional feature
+  --verbose
 
-tba
+```
 
 ### Module - Inside a Python Script
 ```python
@@ -99,6 +102,6 @@ from normi import NormalizedMI
 # X is np.ndarray of shape (n_samples, n_features)
 
 nmi = NormalizedMI()
-nmi.fit(X)
+nmi_matrix = nmi.fit_transform(X)
 ...
 ```
