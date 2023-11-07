@@ -5,6 +5,7 @@ This guide will give you an overview of how to publish a new version of normi. I
 ## Prepare New Release
 
 Please ensure that,
+
 1. the version number in `setup.py` and `src/normi/__init__.py` are bumped,
 1. a new tag is created via `git tag v0.*.*` and pushed `git push --tags`, and 
 1. the changelog includes the new tag and all changes of the release.
@@ -13,6 +14,11 @@ Please ensure that,
 
 There is an CI to publish new versions automatically. Therefore, a new release
 needs to be published. Please ensure that each release is based on a tag.
+
+## Build and Upload to PyPI (preferred)
+
+It is as simple as creating a new release from the new tag. The Github action
+will do the rest.
 
 ## Build and Upload to PyPI (admin only)
 
