@@ -58,7 +58,7 @@ README = remove_gh_dark_mode_only_tags(
 # This call to setup() does all the work
 setuptools.setup(
     name='normi',
-    version='0.1.0',
+    version='0.1.1',
     description='Estimator for Normalized Mutual Information',
     long_description=README,
     long_description_content_type='text/markdown',
