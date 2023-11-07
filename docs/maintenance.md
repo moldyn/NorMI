@@ -10,6 +10,8 @@ Please ensure that,
 1. a new tag is created via `git tag v0.*.*` and pushed `git push --tags`, and 
 1. the changelog includes the new tag and all changes of the release.
 
+As an example see for e.g. the commit of `v0.1.1`, [`c2582ed`](https://github.com/moldyn/NorMI/commit/c2582ed).
+
 ## Upload to PyPI
 
 There is an CI to publish new versions automatically. Therefore, a new release
