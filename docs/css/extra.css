@@ -9,7 +9,7 @@
 }
 
 .md-header__button.md-logo :is(img, svg) {
-    height: 1.4rem;
+    height: 2.4rem;
 }
 
 /* change icon depending on light/dark mode */

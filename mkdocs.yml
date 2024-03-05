@@ -23,8 +23,8 @@ nav:
 theme:
   name: material
   favicon: icon.png
-    #  logo_slate_mode: logo_large_dark.svg
-    #  logo_default_mode: logo_large_light.svg
+  logo_slate_mode: hero_graphic.png
+  logo_default_mode: hero_graphic.png
   custom_dir: docs/overrides
   features:
   - content.code.annotate

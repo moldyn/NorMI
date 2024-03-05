@@ -1,4 +1,5 @@
 <div align="center">
+  <img style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero_graphic.png?raw=true" />
   <!--
   <img class="darkmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/logo_large_dark.svg?raw=true#gh-dark-mode-only" />
   <img class="lightmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/logo_large_light.svg?raw=true#gh-light-mode-only" />
@@ -105,3 +106,7 @@ nmi = NormalizedMI()
 nmi_matrix = nmi.fit_transform(X)
 ...
 ```
+
+## Credits
+
+- Logo generated with Ideogram.ai
