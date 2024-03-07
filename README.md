@@ -1,9 +1,6 @@
 <div align="center">
-  <img style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero_graphic.png?raw=true" />
-  <!--
-  <img class="darkmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/logo_large_dark.svg?raw=true#gh-dark-mode-only" />
-  <img class="lightmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/logo_large_light.svg?raw=true#gh-light-mode-only" />
-  -->
+  <img class="darkmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero_dark.svg?raw=true#gh-dark-mode-only" />
+  <img class="lightmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero.svg?raw=true#gh-light-mode-only" />
 
   <p>
     <a href="https://github.com/wemake-services/wemake-python-styleguide" alt="wemake-python-styleguide">
@@ -109,4 +106,4 @@ nmi_matrix = nmi.fit_transform(X)
 
 ## Credits
 
-- Logo generated with Ideogram.ai
+- Logo generated with DALL·E 3 by @gegabo
