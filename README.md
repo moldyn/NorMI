@@ -1,6 +1,6 @@
 <div align="center">
-  <img class="darkmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero_dark.svg?raw=true#gh-dark-mode-only" />
-  <img class="lightmode" style="width: 400px;" src="https://github.com/moldyn/normi/blob/main/docs/hero.svg?raw=true#gh-light-mode-only" />
+  <img class="darkmode" style="width: 500px;" src="https://github.com/moldyn/normi/blob/main/docs/hero_dark.svg?raw=true#gh-dark-mode-only" />
+  <img class="lightmode" style="width: 500px;" src="https://github.com/moldyn/normi/blob/main/docs/hero.svg?raw=true#gh-light-mode-only" />
 
   <p>
     <a href="https://github.com/wemake-services/wemake-python-styleguide" alt="wemake-python-styleguide">
