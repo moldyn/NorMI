@@ -42,7 +42,7 @@ class NormalizedMI(BaseEstimator):
     ----------
     n_dims : int, default=1
         Dimensionality of input vectors.
-    normalize_method : str, default='joint'
+    normalize_method : str, default='geometric'
         Determines the normalization factor for the mutual information:<br/>
         - `'joint'` is the joint entropy<br/>
         - `'max'` is the maximum of the individual entropies<br/>
@@ -50,7 +50,7 @@ class NormalizedMI(BaseEstimator):
         - `'geometric'` is the square root of the product of the individual
           entropies<br/>
         - `'min'` is the minimum of the individual entropies
-    invariant_measure : str, default='radius'
+    invariant_measure : str, default='volume'
         - `'radius'` normalizing by mean k-nn radius<br/>
         - `'volume'` normalizing by mean k-nn volume<br/>
         - `'kraskov'` no normalization
@@ -95,8 +95,8 @@ class NormalizedMI(BaseEstimator):
         self,
         *,
         n_dims: PositiveInt = 1,
-        normalize_method: NormString = 'joint',
-        invariant_measure: InvMeasureString = 'radius',
+        normalize_method: NormString = 'geometric',
+        invariant_measure: InvMeasureString = 'volume',
         k: PositiveInt = 5,
         n_jobs: Int = -1,
         verbose: bool = True,

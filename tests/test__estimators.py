@@ -101,7 +101,7 @@ def test__reset(normalize_method, X, kwargs):
 
 
 @pytest.mark.parametrize('X, kwargs, result, error', [
-    (X1(), {}, X1_result('joint', 'radius'), None),
+    (X1(), {}, X1_result('geometric', 'volume'), None),
     (
         X1(),
         {'normalize_method': 'joint', 'invariant_measure': 'radius'},
@@ -113,13 +113,13 @@ def test__reset(normalize_method, X, kwargs):
     (
         X1(),
         {'normalize_method': 'arithmetic'},
-        X1_result('arithmetic', 'radius'),
+        X1_result('arithmetic', 'volume'),
         None,
     ),
     (
         X1(),
         {'normalize_method': 'geometric'},
-        X1_result('geometric', 'radius'),
+        X1_result('geometric', 'volume'),
         None,
     ),
     (
