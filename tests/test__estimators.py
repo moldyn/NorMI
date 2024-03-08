@@ -108,8 +108,8 @@ def test__reset(normalize_method, X, kwargs):
         X1_result('joint', 'radius'),
         None,
     ),
-    (X1(), {'normalize_method': 'max'}, X1_result('max', 'radius'), None),
-    (X1(), {'normalize_method': 'min'}, X1_result('min', 'radius'), None),
+    (X1(), {'normalize_method': 'max'}, X1_result('max', 'volume'), None),
+    (X1(), {'normalize_method': 'min'}, X1_result('min', 'volume'), None),
     (
         X1(),
         {'normalize_method': 'arithmetic'},
