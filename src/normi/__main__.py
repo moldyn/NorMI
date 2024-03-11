@@ -57,14 +57,14 @@ Copyright (c) 2023, Daniel Nagel
 )
 @click.option(
     '--norm',
-    default='joint',
+    default='geometric',
     show_default=True,
     type=click.Choice(NORMS, case_sensitive=False),
     help='Normalization method of the mutual information.',
 )
 @click.option(
     '--inv-measure',
-    default='radius',
+    default='volume',
     show_default=True,
     type=click.Choice(INVMEASURES, case_sensitive=False),
     help='Invariant measure to rescale the entropies.',
