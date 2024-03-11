@@ -428,7 +428,7 @@ def kraskov_estimator(
     mean_log_eps: Float = np.mean(np.log(radii))
 
     return (
-        digamma_N + digamma_k - digamma_nx - digamma_ny,  # mi
+        np.max([digamma_N + digamma_k - digamma_nx - digamma_ny, 0]),  # mi
         digamma_N - digamma_k + (dx + dy) * mean_log_eps,  # hxy
         digamma_N - digamma_nx + dx * mean_log_eps,  # hx
         digamma_N - digamma_ny + dy * mean_log_eps,  # hy
