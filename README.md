@@ -23,6 +23,8 @@
         <img src="https://img.shields.io/pypi/pyversions/normi" /></a>
     <a href="https://moldyn.github.io/normi" alt="Docs">
         <img src="https://img.shields.io/badge/MkDocs-Documentation-brightgreen" /></a>
+    <a href="https://arxiv.org/abs/2405.04980" alt="arXiv">
+        <img src="https://img.shields.io/badge/arXiv-2405.04980-red" /></a>
     <a href="https://github.com/moldyn/normi/blob/main/LICENSE" alt="License">
         <img src="https://img.shields.io/github/license/moldyn/normi" /></a>
   </p>
@@ -39,9 +41,11 @@
 # NorMI: Nonparametric Normalized Mutual Information Estimator Based on *k*-NN Statistics
 This software provides an extension to the Kraskov-Estimator to allow normalizing the mutual information.
 
-The method will be published soon as:
-> **Adaptive Entropy-Based Normalization for (High-Dimensional) Mutual Information**  
-> D. Nagel, G. Diez, and G. Stock,  in prep.
+The method was published in:  
+> **Accurate estimation of the normalized mutual information of multidimensional data**  
+> D. Nagel, G. Diez, and G. Stock,  
+> *arXiv* **2024**  
+> doi: [10.48550/arXiv.2405.04980](https://doi.org/10.48550/arXiv.2405.04980)
 
 If you use this software package, please cite the above mentioned paper.
 
