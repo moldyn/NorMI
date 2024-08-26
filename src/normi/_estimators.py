@@ -40,7 +40,7 @@ class NormalizedMI(BaseEstimator):
 
     Parameters
     ----------
-    n_dims : int, default=1
+    n_dims : int or list of ints, default=1
         Dimensionality of input vectors.
     normalize_method : str, default='geometric'
         Determines the normalization factor for the mutual information:<br/>
@@ -94,7 +94,7 @@ class NormalizedMI(BaseEstimator):
     def __init__(
         self,
         *,
-        n_dims: PositiveInt = 1,
+        n_dims: Union[List[PositiveInt], PositiveInt] = 1,
         normalize_method: NormString = 'geometric',
         invariant_measure: InvMeasureString = 'volume',
         k: PositiveInt = 5,
@@ -102,7 +102,7 @@ class NormalizedMI(BaseEstimator):
         verbose: bool = True,
     ):
         """Initialize NormalizedMI class."""
-        self.n_dims: PositiveInt = n_dims
+        self.n_dims: list[PositiveInt] = n_dims
         self.normalize_method: NormString = normalize_method
         self.invariant_measure: InvMeasureString = invariant_measure
         self.k: PositiveInt = k
@@ -131,7 +131,6 @@ class NormalizedMI(BaseEstimator):
 
         """
         self._reset()
-
         _check_X(X=X, n_dims=self.n_dims)
 
         # define number of features and samples
@@ -139,13 +138,19 @@ class NormalizedMI(BaseEstimator):
         n_cols: int
         n_samples, n_cols = X.shape
         self._n_samples: int = n_samples
-        self._n_features: int = n_cols // self.n_dims
+        if isinstance(self.n_dims, int):
+            self._n_features: int = n_cols // self.n_dims
+        else:
+            self._n_features: int = len(self.n_dims)
 
         # scale input
         X = StandardScaler().fit_transform(X)
-        X = np.split(X, self._n_features, axis=1)
+        if isinstance(self.n_dims, int):
+            X = np.split(X, self._n_features, axis=1)
+        else:
+            X = np.split(X, np.cumsum(self.n_dims), axis=1)[:-1]
 
-        self.mi_: PositiveMatrix
+        self.mi_: FloatMatrix
         self.hxy_: FloatMatrix
         self.hx_: FloatMatrix
         self.hy_: FloatMatrix
@@ -436,11 +441,31 @@ def kraskov_estimator(
 
 
 @beartype
-def _check_X(X: Float2DArray, n_dims: PositiveInt):
+def _check_X(X: Float2DArray, n_dims: Union[PositiveInt, List[PositiveInt]]):
     """Sanity check of the input to ensure correct format and dimension."""
-    # parse data
-    if X.shape[1] < 2 * n_dims:
-        raise ValueError('At least two variables need to be provided')
+    _, n_cols = X.shape
+
+    if isinstance(n_dims, int):
+        # When n_dims is a single integer
+        if n_cols < 2 * n_dims:
+            raise ValueError('At least two variables need to be provided')
+
+        n_features = n_cols // n_dims
+        if n_cols != n_features * n_dims:
+            raise ValueError(
+                'The number of provided columns needs to be a multiple of the '
+                'specified dimensionality `n_dims`.',
+            )
+    else:
+        # When n_dims is a list of integers
+        if len(n_dims) < 2:
+            raise ValueError('At least two variables need to be provided')
+
+        if sum(n_dims) != n_cols:
+            raise ValueError(
+                'The number of provided columns needs to match with the sum of `n_dims`.',
+            )
+
     stds = np.std(X, axis=0)
     invalid_stds = (stds == 0) | (np.isnan(stds))
     if np.any(invalid_stds):
@@ -448,12 +473,4 @@ def _check_X(X: Float2DArray, n_dims: PositiveInt):
         raise ValueError(
             f'Columns {idxs} have a standard deviation of zero or NaN. '
             'These columns cannot be used for estimating the NMI.',
-        )
-
-    _, n_cols = X.shape
-    n_features = n_cols // n_dims
-    if n_cols != n_features * n_dims:
-        raise ValueError(
-            'The number of provided columns needs to be a multiple of the '
-            'specified dimensionality `n_dims`.',
         )
