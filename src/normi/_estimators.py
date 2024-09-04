@@ -32,6 +32,7 @@ from normi._typing import (  # noqa: WPS436
     PositiveFloat,
     PositiveInt,
     PositiveMatrix,
+    ArrayLikePositiveInt
 )
 
 
@@ -94,7 +95,7 @@ class NormalizedMI(BaseEstimator):
     def __init__(
         self,
         *,
-        n_dims: Union[List[PositiveInt], PositiveInt] = 1,
+        n_dims: Union[ArrayLikePositiveInt, PositiveInt] = 1,
         normalize_method: NormString = 'geometric',
         invariant_measure: InvMeasureString = 'volume',
         k: PositiveInt = 5,
@@ -102,7 +103,7 @@ class NormalizedMI(BaseEstimator):
         verbose: bool = True,
     ):
         """Initialize NormalizedMI class."""
-        self.n_dims: list[PositiveInt] = n_dims
+        self.n_dims: Union[ArrayLikePositiveInt, PositiveInt] = n_dims
         self.normalize_method: NormString = normalize_method
         self.invariant_measure: InvMeasureString = invariant_measure
         self.k: PositiveInt = k
@@ -441,7 +442,7 @@ def kraskov_estimator(
 
 
 @beartype
-def _check_X(X: Float2DArray, n_dims: Union[PositiveInt, List[PositiveInt]]):
+def _check_X(X: Float2DArray, n_dims: Union[ArrayLikePositiveInt, PositiveInt]):
     """Sanity check of the input to ensure correct format and dimension."""
     _, n_cols = X.shape
 
@@ -461,7 +462,7 @@ def _check_X(X: Float2DArray, n_dims: Union[PositiveInt, List[PositiveInt]]):
         if len(n_dims) < 2:
             raise ValueError('At least two variables need to be provided')
 
-        if sum(n_dims) != n_cols:
+        if np.sum(n_dims) != n_cols:
             raise ValueError(
                 'The number of provided columns needs to match with the sum of `n_dims`.',
             )
