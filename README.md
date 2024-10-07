@@ -23,6 +23,8 @@
         <img src="https://img.shields.io/pypi/pyversions/normi" /></a>
     <a href="https://moldyn.github.io/normi" alt="Docs">
         <img src="https://img.shields.io/badge/MkDocs-Documentation-brightgreen" /></a>
+    <a href="https://doi.org/10.1063/5.0217960" alt="doi">
+        <img src="https://img.shields.io/badge/doi-10.1063%2F5.0217960-blue" /></a>
     <a href="https://arxiv.org/abs/2405.04980" alt="arXiv">
         <img src="https://img.shields.io/badge/arXiv-2405.04980-red" /></a>
     <a href="https://github.com/moldyn/normi/blob/main/LICENSE" alt="License">
@@ -44,8 +46,8 @@ This software provides an extension to the Kraskov-Estimator to allow normalizin
 The method was published in:  
 > **Accurate estimation of the normalized mutual information of multidimensional data**  
 > D. Nagel, G. Diez, and G. Stock,  
-> *arXiv* **2024**  
-> doi: [10.48550/arXiv.2405.04980](https://doi.org/10.48550/arXiv.2405.04980)
+> *J. Chem. Phys.* **2024** 161, 054108  
+> doi: [10.1063/5.0217960](https://doi.org/10.1063/5.0217960)
 
 If you use this software package, please cite the above mentioned paper.
 
