@@ -5,6 +5,7 @@ Copyright (c) 2023, Daniel Nagel
 All rights reserved.
 
 """
+
 import click
 import numpy as np
 
@@ -96,7 +97,13 @@ Copyright (c) 2023, Daniel Nagel
     help='Activate verbose mode.',
 )
 def main(
-    input_file, output_basename, norm, inv_measure, n_dims, precision, verbose,
+    input_file,
+    output_basename,
+    norm,
+    inv_measure,
+    n_dims,
+    precision,
+    verbose,
 ):
     # load file
     if verbose:

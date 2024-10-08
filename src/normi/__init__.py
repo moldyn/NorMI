@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Normalized mutual information"""
+
 __all__ = ['NormalizedMI']
 
 NORMS = {'joint', 'geometric', 'arithmetic', 'min', 'max'}

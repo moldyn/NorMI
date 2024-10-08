@@ -6,6 +6,7 @@ Copyright (c) 2021-2022, Daniel Nagel
 All rights reserved.
 
 """
+
 import os.path
 
 import numpy as np

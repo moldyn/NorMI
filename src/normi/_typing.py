@@ -9,9 +9,11 @@ Copyright (c) 2023, Daniel Nagel
 All rights reserved.
 
 """
+
 import numpy as np
 from beartype.typing import List, Union
 from beartype.vale import Is, IsAttr, IsEqual
+
 from normi import INVMEASURES, NORMS
 
 try:  # for python <= 3.8 use typing_extensions
@@ -29,23 +31,27 @@ def _get_resolution(x):
 
 def _allclose(x, y) -> bool:
     """Wrapper around np.allclose with dtype dependent atol."""
-    atol = np.max([
-        _get_resolution(x),
-        _get_resolution(y),
-        # default value of numpy
-        1e-8,
-    ])
+    atol = np.max(
+        [
+            _get_resolution(x),
+            _get_resolution(y),
+            # default value of numpy
+            1e-8,
+        ]
+    )
     return np.allclose(x, y, atol=atol)
 
 
 class NDim:
     """Class for creating Validators checking for desired dimensions."""
+
     def __class_getitem__(self, ndim):
         return IsAttr['ndim', IsEqual[ndim]]
 
 
 class DType:
     """Class for creating Validators checking for desired dtype."""
+
     def __class_getitem__(self, dtype):
         return Is[lambda arr: np.issubdtype(arr.dtype, dtype)]
 

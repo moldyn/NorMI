@@ -6,6 +6,7 @@ Copyright (c) 2023, Daniel Nagel
 All rights reserved.
 
 """
+
 __all__ = ['NormalizedMI']  # noqa: WPS410
 
 import numpy as np
@@ -32,7 +33,7 @@ from normi._typing import (  # noqa: WPS436
     PositiveFloat,
     PositiveInt,
     PositiveMatrix,
-    ArrayLikePositiveInt
+    ArrayLikePositiveInt,
 )
 
 
@@ -221,7 +222,8 @@ class NormalizedMI(BaseEstimator):
 
     @beartype
     def nmi(
-        self, normalize_method: Optional[NormString] = None,
+        self,
+        normalize_method: Optional[NormString] = None,
     ) -> NormalizedMatrix:
         """Return the normalized mutual information matrix.
 
@@ -265,11 +267,13 @@ class NormalizedMI(BaseEstimator):
 
     @beartype
     def _kraskov_estimator(
-        self, X: List[Float2DArray],
+        self,
+        X: List[Float2DArray],
     ) -> Tuple[PositiveMatrix, FloatMatrix, FloatMatrix, FloatMatrix]:
         """Estimate the mutual information and entropies matrices."""
         mi: PositiveMatrix = np.empty(  # noqa: WPS317
-            (self._n_features, self._n_features), dtype=self._dtype,
+            (self._n_features, self._n_features),
+            dtype=self._dtype,
         )
         hxy: FloatMatrix = np.empty_like(mi)
         hx: FloatMatrix = np.empty_like(mi)
@@ -286,7 +290,7 @@ class NormalizedMI(BaseEstimator):
             hxy[idx_i, idx_i] = 1
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
-            for idx_j, xj in enumerate(X[idx_i + 1:], idx_i + 1):
+            for idx_j, xj in enumerate(X[idx_i + 1 :], idx_i + 1):
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
                     xi,
                     xj,
@@ -337,9 +341,7 @@ def _scale_nearest_neighbor_distance(
     if invariant_measure == 'radius':
         return radii / np.mean(radii)
     elif invariant_measure == 'volume':
-        return radii / (
-            np.mean(radii ** n_dims) ** (1 / n_dims)
-        )
+        return radii / (np.mean(radii**n_dims) ** (1 / n_dims))
     elif invariant_measure == 'kraskov':
         return radii
     # This should never be reached
@@ -399,7 +401,9 @@ def kraskov_estimator(
     # Here we rely on NearestNeighbors to select the fastest algorithm.
     tree = KDTree(xy)
     radii: FloatArray = tree.query(
-        xy, k=n_neighbors + 1, **kdtree_kwargs,
+        xy,
+        k=n_neighbors + 1,
+        **kdtree_kwargs,
     )[0][:, 1:]  # neglect self count
     # take next smaller radii
     radii: FloatArray = np.nextafter(radii[:, -1], 0)
@@ -415,8 +419,12 @@ def kraskov_estimator(
     ny: FloatArray
     nx, ny = [
         KDTree(z).query_ball_point(
-            z, r=radii, return_length=True, **kdtree_kwargs,
-        ) - 1  # fix self count
+            z,
+            r=radii,
+            return_length=True,
+            **kdtree_kwargs,
+        )
+        - 1  # fix self count
         for z in (x, y)
     ]
 
