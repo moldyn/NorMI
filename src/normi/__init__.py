@@ -9,4 +9,4 @@ INVMEASURES = {'radius', 'volume', 'kraskov'}
 from ._estimators import NormalizedMI
 
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'

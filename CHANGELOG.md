@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [0.2.1] - 2024-10-08
+#### Added Features and Improvements 🙌:
+- Allowing to use features of different dimensions by @marko-tuononen
+
+#### Other changes:
+- Upgrade gh actions to latest version
+
+
 ## [0.2.0] - 2024-03-11
 #### API changes warning ⚠️:
 - Changed default for invariant measure to `volume`
@@ -40,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release 🎉
 
 
-[Unreleased]: https://github.com/moldyn/normi/compare/v0.2.0...main
+[Unreleased]: https://github.com/moldyn/normi/compare/v0.2.1...main
+[0.2.1]: https://github.com/moldyn/normi/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/moldyn/normi/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/moldyn/normi/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/moldyn/normi/tree/v0.1.0
