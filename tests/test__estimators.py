@@ -91,9 +91,12 @@ def test__scale_nearest_neighbor_distance(
     [
         (np.random.uniform(size=(10, 9)), 1, None),
         (np.random.uniform(size=(10, 9)), 3, None),
+        (np.random.uniform(size=(10, 9)), [3, 3, 3], None),
         (np.random.uniform(size=(10, 9)), np.array([3, 3, 3]), None),
+        (np.random.uniform(size=(10, 9)), [4, 3, 2], None),
         (np.random.uniform(size=(10, 9)), np.array([4, 3, 2]), None),
         (np.random.uniform(size=(10, 9)), np.array([3, 2, 3]), ValueError),
+        (np.random.uniform(size=(10, 9)), [9], ValueError),
         (np.random.uniform(size=(10, 9)), np.array([9]), ValueError),
         (np.random.uniform(size=(10, 9)), 5, ValueError),
         (np.random.uniform(size=(10, 9)), 2, ValueError),
