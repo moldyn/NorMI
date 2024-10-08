@@ -77,6 +77,11 @@ def test__scale_nearest_neighbor_distance(
 @pytest.mark.parametrize('X, n_dims, error', [
     (np.random.uniform(size=(10, 9)), 1, None),
     (np.random.uniform(size=(10, 9)), 3, None),
+    (np.random.uniform(size=(10, 9)), np.array([3, 3, 3]), None),
+    (np.random.uniform(size=(10, 9)), np.array([4, 3, 2]), None),
+    (np.random.uniform(size=(10, 9)), np.array([3, 2, 3]), ValueError),
+    (np.random.uniform(size=(10, 9)), np.array([9]), ValueError),
+    (np.random.uniform(size=(10, 9)), 5, ValueError),
     (np.random.uniform(size=(10, 9)), 2, ValueError),
     (np.zeros((10, 9)).astype(float), 1, ValueError),
     (np.vander((1, 2, 3, 4), 3).astype(float), 1, ValueError),
@@ -149,6 +154,12 @@ def test__reset(normalize_method, X, kwargs):
     (
         X1(),
         {'normalize_method': 'geometric', 'invariant_measure': 'volume'},
+        X1_result('geometric', 'volume'),
+        None,
+    ),
+    (
+        X1(),
+        {'n_dims': np.array([1, 1]), 'normalize_method': 'geometric', 'invariant_measure': 'volume'},
         X1_result('geometric', 'volume'),
         None,
     ),

@@ -84,6 +84,9 @@ PositiveFloat = Annotated[
 DTypeLike = Annotated[type, IsDTypeLike]
 
 # array datatypes
+IntNDArray = Annotated[np.ndarray, DType[np.integer]]
+ArrayLikeInt = Union[List[int], IntNDArray]
+ArrayLikePositiveInt = Annotated[ArrayLikeInt, IsPositive]
 FloatNDArray = Annotated[np.ndarray, DType[np.floating]]
 ArrayLikeFloat = Union[List[float], FloatNDArray]
 FloatArray = Annotated[FloatNDArray, NDim[1]]
