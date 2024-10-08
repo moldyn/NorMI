@@ -290,7 +290,7 @@ class NormalizedMI(BaseEstimator):
             hxy[idx_i, idx_i] = 1
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
-            for idx_j, xj in enumerate(X[idx_i + 1 :], idx_i + 1):
+            for idx_j, xj in enumerate(X[idx_i + 1:], idx_i + 1):
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
                     xi,
                     xj,
@@ -423,8 +423,7 @@ def kraskov_estimator(
             r=radii,
             return_length=True,
             **kdtree_kwargs,
-        )
-        - 1  # fix self count
+        ) - 1  # fix self count
         for z in (x, y)
     ]
 
@@ -450,7 +449,10 @@ def kraskov_estimator(
 
 
 @beartype
-def _check_X(X: Float2DArray, n_dims: Union[ArrayLikePositiveInt, PositiveInt]):
+def _check_X(
+    X: Float2DArray,
+    n_dims: Union[ArrayLikePositiveInt, PositiveInt],
+):
     """Sanity check of the input to ensure correct format and dimension."""
     _, n_cols = X.shape
 
@@ -472,7 +474,8 @@ def _check_X(X: Float2DArray, n_dims: Union[ArrayLikePositiveInt, PositiveInt]):
 
         if np.sum(n_dims) != n_cols:
             raise ValueError(
-                'The number of provided columns needs to match with the sum of `n_dims`.',
+                'The number of provided columns needs to match with the sum '
+                'of `n_dims`.',
             )
 
     stds = np.std(X, axis=0)
