@@ -321,7 +321,8 @@ def _scale_nearest_neighbor_distance(
     invariant_measure : str, default='radius'
         - `'radius'` normalizing by mean k-nn radius<br/>
         - `'volume'` normalizing by mean k-nn volume<br/>
-        - `'kraskov'` no normalization
+        - `'volume_stable'` more stable calculation of mean k-nn volume [2]<br/>
+        - `'kraskov'` no normalization [1]
     n_dims : int
         Dimensionality of the embedding space used to estimate the radii.
     radii : ndarray, shape (n_samples, )
@@ -336,12 +337,23 @@ def _scale_nearest_neighbor_distance(
     ----------
     .. [1] A. Kraskov, H. Stogbauer and P. Grassberger, "Estimating mutual
            information". Phys. Rev. E 69, 2004.
-
+    .. [2] M. Tuononen, V. Hautamaki, "Improving Numerical Stability of
+           Normalized Mutual Information Estimator on High Dimensions",
+           arXiv:2410.07642v1 [cs.IT], 10 Oct 2024.
     """
     if invariant_measure == 'radius':
         return radii / np.mean(radii)
     elif invariant_measure == 'volume':
         return radii / (np.mean(radii**n_dims) ** (1 / n_dims))
+    elif invariant_measure == 'volume_stable':
+        n_samples = len(radii)
+        radii_max = np.max(radii)
+        denominator_in_log_domain = -np.log(n_samples) / n_dims
+        denominator_in_log_domain += np.log(radii_max)
+        denominator_in_log_domain += (
+            (1 / n_dims) * np.log(np.sum((radii / radii_max)**n_dims))
+        )
+        return radii / np.exp(denominator_in_log_domain)
     elif invariant_measure == 'kraskov':
         return radii
     # This should never be reached
