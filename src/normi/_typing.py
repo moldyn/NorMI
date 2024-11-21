@@ -65,8 +65,8 @@ IsLessThanOne = Is[lambda arr: bool(np.all(arr <= 1))]
 IsMatrix = Is[lambda arr: arr.shape[0] == arr.shape[1]]
 IsNormString = Is[lambda val: val in NORMS]
 IsInvMeasureString = Is[lambda val: val in INVMEASURES]
-IsPositive = Is[lambda arr: bool(np.all(arr >= 0))]
-IsStrictlyPositive = Is[lambda arr: bool(np.all(arr > 0))]
+IsPositive = Is[lambda arr: bool(np.all(np.asarray(arr) >= 0))]
+IsStrictlyPositive = Is[lambda arr: bool(np.all(np.asarray(arr) > 0))]
 IsSymmetric = Is[lambda arr: _allclose(arr, arr.T)]
 
 # Define Types

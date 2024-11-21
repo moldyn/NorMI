@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+#### Bugfix 🐛:
+- Fix error introduced in #8 by not supporting lists as arguments
 
 
 ## [0.2.1] - 2024-10-08
