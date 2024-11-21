@@ -40,6 +40,13 @@ def X1_result(method, measure):
             'arithmetic': 0.6268627,
             'geometric': 0.6269047,
         },
+        'volume_stable': {
+            'joint': 0.4565186,
+            'max': 0.6196869,
+            'min': 0.6342067,
+            'arithmetic': 0.6268627,
+            'geometric': 0.6269047,
+        },
     }[measure][method]
 
 
@@ -51,6 +58,14 @@ def X1_result(method, measure):
         ('volume', 1, np.arange(5), np.arange(5) / 2, None),
         (
             'volume',
+            2,
+            np.arange(5),
+            [0, 0.40824829, 0.81649658, 1.22474487, 1.63299316],
+            None,
+        ),
+        ('volume_stable', 1, np.arange(5), np.arange(5) / 2, None),
+        (
+            'volume_stable',
             2,
             np.arange(5),
             [0, 0.40824829, 0.81649658, 1.22474487, 1.63299316],
@@ -188,6 +203,34 @@ def test__reset(normalize_method, X, kwargs):
                 'invariant_measure': 'volume',
             },
             X1_result('geometric', 'volume'),
+            None,
+        ),
+        (
+            X1(),
+            {'normalize_method': 'arithmetic', 'invariant_measure': 'volume_stable'},
+            X1_result('arithmetic', 'volume_stable'),
+            None,
+        ),
+        (
+            X1(),
+            {'normalize_method': 'geometric', 'invariant_measure': 'volume_stable'},
+            X1_result('geometric', 'volume_stable'),
+            None,
+        ),
+        (
+            X1(),
+            {'normalize_method': 'joint', 'invariant_measure': 'volume_stable'},
+            X1_result('joint', 'volume_stable'),
+            None,
+        ),
+        (
+            X1(),
+            {
+                'n_dims': np.array([1, 1]),
+                'normalize_method': 'geometric',
+                'invariant_measure': 'volume_stable',
+            },
+            X1_result('geometric', 'volume_stable'),
             None,
         ),
     ],
