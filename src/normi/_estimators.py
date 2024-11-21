@@ -321,7 +321,7 @@ def _scale_nearest_neighbor_distance(
     invariant_measure : str, default='radius'
         - `'radius'` normalizing by mean k-nn radius<br/>
         - `'volume'` normalizing by mean k-nn volume<br/>
-        - `'volume_stable'` more stable calculation of mean k-nn volume [2]<br/>
+        - `'volume_stable'` high-dim correction of mean k-nn volume [2]<br/>
         - `'kraskov'` no normalization [1]
     n_dims : int
         Dimensionality of the embedding space used to estimate the radii.

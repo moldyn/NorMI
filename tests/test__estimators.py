@@ -207,19 +207,28 @@ def test__reset(normalize_method, X, kwargs):
         ),
         (
             X1(),
-            {'normalize_method': 'arithmetic', 'invariant_measure': 'volume_stable'},
+            {
+                'normalize_method': 'arithmetic',
+                'invariant_measure': 'volume_stable',
+            },
             X1_result('arithmetic', 'volume_stable'),
             None,
         ),
         (
             X1(),
-            {'normalize_method': 'geometric', 'invariant_measure': 'volume_stable'},
+            {
+                'normalize_method': 'geometric',
+                'invariant_measure': 'volume_stable',
+            },
             X1_result('geometric', 'volume_stable'),
             None,
         ),
         (
             X1(),
-            {'normalize_method': 'joint', 'invariant_measure': 'volume_stable'},
+            {
+                'normalize_method': 'joint',
+                'invariant_measure': 'volume_stable',
+            },
             X1_result('joint', 'volume_stable'),
             None,
         ),
