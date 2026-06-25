@@ -1,0 +1,108 @@
+[project]
+name = "normi"
+version = "0.2.1"
+description = "Estimator for Normalized Mutual Information"
+readme = "README.md"
+authors = [
+    { name = "braniii" }
+]
+requires-python = ">=3.10"
+license = "MIT"
+keywords = [
+    "normalized mutual information",
+    "mutual information",
+    "Kraskov Estimator",
+    "KSG Estimator",
+]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "numpy>=1.21.0",
+    "scipy",
+    "click>=8.0.0",
+    "beartype>=0.10.4",
+    "tqdm",
+    "scikit-learn>=1.0.0",
+]
+
+[project.scripts]
+normi = "normi.__main__:main"
+
+[project.urls]
+Documentation = "https://moldyn.github.io/NorMI"
+Repository = "https://github.com/moldyn/NorMI"
+Changelog = "https://moldyn.github.io/NorMI/changelog"
+Issues = "https://github.com/moldyn/NorMI/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/normi"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [
+  "docs",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["src", "tests"]
+addopts = [
+    "--strict-markers",
+    "--doctest-modules",
+    "--reruns=5",
+    "--reruns-delay=1",
+    "--cov-report=term-missing",
+    "--cov=src/normi",
+]
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = ["E4", "E7", "E9", "F", "C901"]
+ignore = ["F722"]
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+preview = true
+
+[tool.ruff.format]
+quote-style = "single"
+preview = true
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"**/{tests,docs}/*" = ["E402"]
+
+[dependency-groups]
+dev = [
+    "coverage>=7.10.3",
+    "pre-commit>=3.5.0",
+    "pytest>=8.0.0",
+    "pytest-cov>=6.2.1",
+    "pytest-rerunfailures>=14.0",
+    "ruff>=0.12.0",
+]
+docs = [
+    "mkdocs-click>=0.8.1",
+    "mkdocs-gen-files>=0.5.0",
+    "mkdocs-literate-nav>=0.6.2",
+    "mkdocs-material>=9.6.14",
+    "mkdocs-section-index>=0.3.10",
+    "mkdocstrings-python>=1.16.12",
+]

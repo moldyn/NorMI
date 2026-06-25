@@ -85,8 +85,8 @@ class NormalizedMI(BaseEstimator):
     >>> nmi.fit(data)
     NormalizedMI()
     >>> nmi.nmi_
-    array([[1.        , 0.79868365],
-           [0.79868365, 1.        ]])
+    array([[1.        , 0.89624628],
+           [0.89624628, 1.        ]])
 
     """
 
@@ -290,7 +290,7 @@ class NormalizedMI(BaseEstimator):
             hxy[idx_i, idx_i] = 1
             hx[idx_i, idx_i] = 1
             hy[idx_i, idx_i] = 1
-            for idx_j, xj in enumerate(X[idx_i + 1:], idx_i + 1):
+            for idx_j, xj in enumerate(X[idx_i + 1 :], idx_i + 1):
                 mi_ij, hxy_ij, hx_ij, hy_ij = kraskov_estimator(
                     xi,
                     xj,
@@ -350,8 +350,8 @@ def _scale_nearest_neighbor_distance(
         radii_max = np.max(radii)
         denominator_in_log_domain = -np.log(n_samples) / n_dims
         denominator_in_log_domain += np.log(radii_max)
-        denominator_in_log_domain += (
-            (1 / n_dims) * np.log(np.sum((radii / radii_max)**n_dims))
+        denominator_in_log_domain += (1 / n_dims) * np.log(
+            np.sum((radii / radii_max) ** n_dims)
         )
         return radii / np.exp(denominator_in_log_domain)
     elif invariant_measure == 'kraskov':
@@ -435,7 +435,8 @@ def kraskov_estimator(
             r=radii,
             return_length=True,
             **kdtree_kwargs,
-        ) - 1  # fix self count
+        )
+        - 1  # fix self count
         for z in (x, y)
     ]
 

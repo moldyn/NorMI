@@ -31,14 +31,12 @@ def _get_resolution(x):
 
 def _allclose(x, y) -> bool:
     """Wrapper around np.allclose with dtype dependent atol."""
-    atol = np.max(
-        [
-            _get_resolution(x),
-            _get_resolution(y),
-            # default value of numpy
-            1e-8,
-        ]
-    )
+    atol = np.max([
+        _get_resolution(x),
+        _get_resolution(y),
+        # default value of numpy
+        1e-8,
+    ])
     return np.allclose(x, y, atol=atol)
 
 
