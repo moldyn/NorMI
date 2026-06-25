@@ -83,6 +83,10 @@ PositiveFloat = Annotated[
     Union[float, np.floating],
     IsStrictlyPositive,
 ]
+NonNegativeFloat = Annotated[
+    Union[float, np.floating],
+    IsPositive,
+]
 
 # beartype substitute for np.typing.DTypeLike
 DTypeLike = Annotated[type, IsDTypeLike]
