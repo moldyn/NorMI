@@ -19,49 +19,33 @@ If you want to request a change, you first have to [fork the repository](https:/
 
 ### Setup a development environment
 
-=== "bash + conda"
+First you need to install `uv`. Please follow the installation instruction provided on their page [docs.astral.sh/uv](https://docs.astral.sh/uv/).
 
-    ``` bash
-    conda create -n normi -c conda-forge python=3.12
-    conda activate normi
-    python -m pip install -e .[all]
-    ```
+```bash
+# create the virtual environment and install all dependency groups
+uv sync --all-groups
 
-=== "bash + venv"
+# install the pre-commit hooks (runs ruff on every commit)
+uv run pre-commit install
+```
 
-    ``` bash
-    python -m venv ./normi
-    source ./normi/bin/activate
-    python -m pip install -e .[all]
-    ```
-
-=== "zsh + conda"
-
-    ``` zsh
-    conda create -n normi -c conda-forge python=3.12
-    conda activate normi
-    python -m pip install -e .\[all]
-    ```
-
-=== "zsh + venv"
-
-    ``` zsh
-    python -m venv ./normi
-    source ./normi/bin/activate
-    python -m pip install -e .\[all]
-    ```
+With the hooks installed, `ruff` lints and formats your staged files automatically on each `git commit`. To run them manually on the whole project at any time:
+```bash
+uv run pre-commit run --all-files
+```
 
 ### Make changes and run tests
 
-Apply your changes and check if you followed the coding style (PEP8) by running
+Apply your changes and check if you followed the coding style by running
 ```bash
-python -m flake8 --config flake8-CI.cfg
+uv run ruff check
+uv run ruff format --check
 ```
-All errors pointing to `./build/` can be neglected.
+Most issues can be fixed automatically with `uv run ruff check --fix` and `uv run ruff format`.
 
 If you add a new function/method/class please ensure that you add a test function, as well. Running the test simply by
 ```bash
-pytest
+uv run pytest
 ```
 Ensure that the coverage does not decrease.
 

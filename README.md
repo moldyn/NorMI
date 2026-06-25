@@ -3,8 +3,8 @@
   <img class="lightmode" style="width: 500px;" src="https://github.com/moldyn/normi/blob/main/docs/hero.svg?raw=true#gh-light-mode-only" />
 
   <p>
-    <a href="https://github.com/wemake-services/wemake-python-styleguide" alt="wemake-python-styleguide">
-        <img src="https://img.shields.io/badge/style-wemake-000000.svg" /></a>
+    <a href="https://github.com/astral-sh/ruff" alt="ruff">
+        <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" /></a>
     <a href="https://beartype.rtfd.io" alt="bear-ified">
         <img src="https://raw.githubusercontent.com/beartype/beartype-assets/main/badge/bear-ified.svg" /></a>
     <a href="https://pypi.org/project/normi" alt="PyPI">

@@ -14,8 +14,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+#### API changes warning ⚠️:
+- Drop support for Python 3.8 and 3.9
+
+#### Added Features and Improvements 🙌:
+- Add support for Python 3.13 and 3.14
+- Add `volume_stable` invariant measure to `NormalizedMI`
+
 #### Bugfix 🐛:
 - Fix error introduced in #8 by not supporting lists as arguments
+
+#### Other changes:
+- Migrate tech stack to use `uv` and `ruff`
+- Upgrade gh actions to latest version
 
 
 ## [0.2.1] - 2024-10-08

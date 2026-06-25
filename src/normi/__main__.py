@@ -52,8 +52,7 @@ Copyright (c) 2023, Daniel Nagel
     required=True,
     type=click.Path(),
     help=(
-        'Path to output basename. Will be a matrix of shape (n_features, '
-        'n_features).'
+        'Path to output basename. Will be a matrix of shape (n_features, n_features).'
     ),
 )
 @click.option(
