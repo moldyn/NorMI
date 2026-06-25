@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Bugfix 🐛:
 - Fix error introduced in #8 by not supporting lists as arguments
+- Fix beartype error when the estimated mutual information is exactly zero (#7)
 
 #### Other changes:
 - Migrate tech stack to use `uv` and `ruff`

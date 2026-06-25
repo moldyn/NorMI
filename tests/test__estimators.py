@@ -253,3 +253,19 @@ def test_NormalizedMI(X, kwargs, result, error):
     else:
         with pytest.raises(error):
             nmi.fit(X)
+
+
+@pytest.mark.parametrize('normalize_method', ['joint', 'geometric', 'max'])
+def test_NormalizedMI_zero_mi(normalize_method):
+    """Independent variables yield MI=0 without raising (regression #7)."""
+    rng = np.random.default_rng(42)
+    X = rng.normal(size=(100, 4))
+
+    nmi = NormalizedMI(normalize_method=normalize_method, verbose=False)
+    # estimating MI of independent columns must not raise a beartype error
+    nmi.fit(X)
+
+    # at least one off-diagonal MI is exactly zero for this data
+    assert np.any(nmi.mi_ == 0)
+    # zero MI maps to zero NMI
+    assert_array_almost_equal(nmi.nmi_[nmi.mi_ == 0], 0)
