@@ -14,7 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+#### API changes warning ⚠️:
+- Drop support for Python 3.8 and 3.9
+
 #### Added Features and Improvements 🙌:
+- Add support for Python 3.13 and 3.14
 - Add `volume_stable` invariant measure to `NormalizedMI`
 
 #### Bugfix 🐛:
