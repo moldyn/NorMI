@@ -13,6 +13,8 @@ nav:
   - Overview: index.md
   - Changelog: changelog.md
   - License: license.md
+- Tutorials:
+  - Choosing the right measure: tutorial/measures.ipynb
 - FAQ: faq.md
 - Code Reference: reference/
 - Development:
@@ -57,6 +59,7 @@ markdown_extensions:
   - footnotes
   - mkdocs-click
   - md_in_html
+  - nl2br
   - toc:
       permalink: true
 
@@ -68,8 +71,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight
   - pymdownx.inlinehilite
   - pymdownx.keys
@@ -88,6 +91,11 @@ markdown_extensions:
 plugins:
 - section-index
 - search
+- mkdocs-jupyter:
+    include: ["*.ipynb"]
+    execute: false
+    allow_errors: false
+    ignore_h1_titles: true
 - gen-files:
     scripts:
     - docs/gen_ref_nav.py
@@ -97,7 +105,7 @@ plugins:
     handlers:
       python:
         paths: [src]
-        import:
+        inventories:
         - https://numpy.org/doc/stable/objects.inv
         options:
           members_order: "source"

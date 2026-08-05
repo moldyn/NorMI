@@ -99,8 +99,10 @@ dev = [
     "ruff>=0.12.0",
 ]
 docs = [
+    "matplotlib>=3.7.0",
     "mkdocs-click>=0.8.1",
     "mkdocs-gen-files>=0.5.0",
+    "mkdocs-jupyter>=0.25.0",
     "mkdocs-literate-nav>=0.6.2",
     "mkdocs-material>=9.6.14",
     "mkdocs-section-index>=0.3.10",

@@ -13,7 +13,7 @@ nav = mkdocs_gen_files.Nav()
 
 for path in sorted(Path('src').glob('**/*.py')):
     module_path = path.relative_to('src').with_suffix('')
-    doc_path = path.relative_to('src', 'normi').with_suffix('.md')
+    doc_path = path.relative_to(Path('src', 'normi')).with_suffix('.md')
     full_doc_path = Path('reference', doc_path)
 
     parts = list(module_path.parts)
@@ -32,7 +32,7 @@ for path in sorted(Path('src').glob('**/*.py')):
         with mkdocs_gen_files.open(full_doc_path, 'w') as fd:
             mkdocs_click = (
                 '::: mkdocs-click\n'
-                '    :module: src.normi.__main__\n'
+                '    :module: normi.__main__\n'
                 '    :command: main\n'
                 '    :prog_name: normi\n'
                 '    :list_subcommands: False\n'
