@@ -52,5 +52,26 @@ To upload the new files, run
 python3 -m twine upload dist/*
 ```
 
+## Documentation
+
+The documentation is built with [Zensical](https://zensical.org) and
+configured in `zensical.toml`. To preview it locally, run
+
+```bash
+uv run --group docs zensical serve
+```
+
+The site is deployed automatically by the `github pages` CI on every push to
+`main`.
+
+The tutorial pages are written as Jupyter notebooks in `docs/tutorial/`. After
+changing a notebook, re-run it and regenerate the Markdown page via
+
+```bash
+uvx --from nbconvert --with ipython jupyter-nbconvert --to markdown docs/tutorial/measures.ipynb
+```
+
+and commit both files together.
+
 ## Update on Conda-Forge
 Once a new version is published on PyPI, the conda-forge bot will automatically create a pull request on [normi-feedstock](https://github.com/conda-forge/normi-feedstock).

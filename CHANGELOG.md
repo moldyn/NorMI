@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgrade gh actions to latest version
 - Fix `mkdocs` documentation build on Python 3.14 and newer `mkdocstrings`
 - Render docstring line breaks correctly via the `nl2br` Markdown extension
+- Migrate documentation from `mkdocs-material` to [Zensical](https://zensical.org)
+  and deploy it via GitHub Pages actions instead of the `gh-pages` branch
 
 
 ## [0.2.1] - 2024-10-08
