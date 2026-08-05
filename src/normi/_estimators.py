@@ -45,16 +45,19 @@ class NormalizedMI(BaseEstimator):
     n_dims : int or list of ints, default=1
         Dimensionality of input vectors.
     normalize_method : str, default='geometric'
-        Determines the normalization factor for the mutual information:<br/>
-        - `'joint'` is the joint entropy<br/>
-        - `'max'` is the maximum of the individual entropies<br/>
-        - `'arithmetic'` is the mean of the individual entropies<br/>
-        - `'geometric'` is the square root of the product of the individual
-          entropies<br/>
+        Determines the normalization factor for the mutual information:
+
+        - `'joint'` is the joint entropy
+        - `'max'` is the maximum of the individual entropies
+        - `'arithmetic'` is the mean of the individual entropies
+        - `'geometric'` is the square root of the product of the individual entropies
         - `'min'` is the minimum of the individual entropies
     invariant_measure : str, default='volume'
-        - `'radius'` normalizing by mean k-nn radius<br/>
-        - `'volume'` normalizing by mean k-nn volume<br/>
+        - `'radius'` normalizing by mean k-nn radius
+        - `'radius_median'` normalizing by median k-nn radius, more robust against outliers
+        - `'volume'` normalizing by mean k-nn volume
+        - `'volume_median'` normalizing by median k-nn volume, more robust against outliers
+        - `'volume_stable'` high-dim correction of mean k-nn volume
         - `'kraskov'` no normalization
     k : int, default=5
         Number of nearest neighbors to use in $k$-nn estimator.
@@ -319,9 +322,11 @@ def _scale_nearest_neighbor_distance(
     Parameters
     ----------
     invariant_measure : str, default='radius'
-        - `'radius'` normalizing by mean k-nn radius<br/>
-        - `'volume'` normalizing by mean k-nn volume<br/>
-        - `'volume_stable'` high-dim correction of mean k-nn volume [2]<br/>
+        - `'radius'` normalizing by mean k-nn radius
+        - `'radius_median'` normalizing by median k-nn radius
+        - `'volume'` normalizing by mean k-nn volume
+        - `'volume_median'` normalizing by median k-nn volume
+        - `'volume_stable'` high-dim correction of mean k-nn volume [2]
         - `'kraskov'` no normalization [1]
     n_dims : int
         Dimensionality of the embedding space used to estimate the radii.
@@ -343,8 +348,12 @@ def _scale_nearest_neighbor_distance(
     """
     if invariant_measure == 'radius':
         return radii / np.mean(radii)
+    elif invariant_measure == 'radius_median':
+        return radii / np.median(radii)
     elif invariant_measure == 'volume':
         return radii / (np.mean(radii**n_dims) ** (1 / n_dims))
+    elif invariant_measure == 'volume_median':
+        return radii / (np.median(radii**n_dims) ** (1 / n_dims))
     elif invariant_measure == 'volume_stable':
         n_samples = len(radii)
         radii_max = np.max(radii)
@@ -384,8 +393,10 @@ def kraskov_estimator(
     n_neighbors : int
         Number of nearest neighbors to search for each point, see [1]_.
     invariant_measure : str, default='radius'
-        - `'radius'` normalizing by mean k-nn radius<br/>
-        - `'volume'` normalizing by mean k-nn volume<br/>
+        - `'radius'` normalizing by mean k-nn radius
+        - `'radius_median'` normalizing by median k-nn radius
+        - `'volume'` normalizing by mean k-nn volume
+        - `'volume_median'` normalizing by median k-nn volume
         - `'kraskov'` no normalization
     n_jobs : int
         Number of jobs to use.

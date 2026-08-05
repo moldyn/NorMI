@@ -4,7 +4,14 @@
 __all__ = ['NormalizedMI']
 
 NORMS = {'joint', 'geometric', 'arithmetic', 'min', 'max'}
-INVMEASURES = {'radius', 'volume', 'volume_stable', 'kraskov'}
+INVMEASURES = {
+    'radius',
+    'radius_median',
+    'volume',
+    'volume_median',
+    'volume_stable',
+    'kraskov',
+}
 
 from ._estimators import NormalizedMI
 

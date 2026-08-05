@@ -71,6 +71,16 @@ def X1_result(method, measure):
             [0, 0.40824829, 0.81649658, 1.22474487, 1.63299316],
             None,
         ),
+        ('radius_median', 1, np.arange(5), np.arange(5) / 2, None),
+        ('radius_median', 2, np.arange(5), np.arange(5) / 2, None),
+        ('volume_median', 1, np.arange(5), np.arange(5) / 2, None),
+        (
+            'volume_median',
+            2,
+            np.arange(5),
+            np.arange(5) / np.sqrt(np.median(np.arange(5) ** 2)),
+            None,
+        ),
         ('kraskov', 1, np.arange(5), np.arange(5), None),
         ('none', 1, np.arange(5), np.arange(5), BeartypeException),
     ],
@@ -253,6 +263,26 @@ def test_NormalizedMI(X, kwargs, result, error):
     else:
         with pytest.raises(error):
             nmi.fit(X)
+
+
+@pytest.mark.parametrize(
+    'invariant_measure', ['radius_median', 'volume_median'],
+)
+def test_NormalizedMI_median_outliers(invariant_measure):
+    """Median rescaling stays valid on outlier-heavy data (issue #6)."""
+    rng = np.random.default_rng(42)
+    # log-normal data on a linear scale produces strong outliers, which
+    # inflate the mean radius/volume and can yield negative entropies.
+    X = rng.lognormal(mean=0, sigma=2, size=(2000, 3))
+
+    nmi = NormalizedMI(
+        invariant_measure=invariant_measure, verbose=False,
+    ).fit(X)
+
+    # the NormalizedMatrix type guarantees values in [0, 1]; assert explicitly
+    assert np.all(nmi.nmi_ >= 0)
+    assert np.all(nmi.nmi_ <= 1)
+    assert np.all(np.isfinite(nmi.nmi_))
 
 
 @pytest.mark.parametrize('normalize_method', ['joint', 'geometric', 'max'])
