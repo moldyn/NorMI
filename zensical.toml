@@ -28,6 +28,9 @@ nav = [
     ]},
     {"MolDyn Freiburg" = "https://moldyn.uni-freiburg.de/"},
 ]
+extra_css = [
+    "css/extra.css",
+]
 extra_javascript = [
     "javascripts/mathjax.js",
     "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js",
@@ -41,6 +44,18 @@ features = [
     "navigation.tabs",
     "navigation.top",
 ]
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+toggle.icon = "material/weather-sunny"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+toggle.icon = "material/weather-night"
+toggle.name = "Switch to light mode"
 
 [[project.extra.social]]
 icon = "fontawesome/solid/globe"

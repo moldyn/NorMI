@@ -1,0 +1,8 @@
+/* show only the hero image matching the active color scheme */
+[data-md-color-scheme="default"] img.darkmode {
+  display: none;
+}
+
+[data-md-color-scheme="slate"] img.lightmode {
+  display: none;
+}
