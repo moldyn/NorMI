@@ -266,7 +266,8 @@ def test_NormalizedMI(X, kwargs, result, error):
 
 
 @pytest.mark.parametrize(
-    'invariant_measure', ['radius_median', 'volume_median'],
+    'invariant_measure',
+    ['radius_median', 'volume_median'],
 )
 def test_NormalizedMI_median_outliers(invariant_measure):
     """Median rescaling stays valid on outlier-heavy data (issue #6)."""
@@ -276,7 +277,8 @@ def test_NormalizedMI_median_outliers(invariant_measure):
     X = rng.lognormal(mean=0, sigma=2, size=(2000, 3))
 
     nmi = NormalizedMI(
-        invariant_measure=invariant_measure, verbose=False,
+        invariant_measure=invariant_measure,
+        verbose=False,
     ).fit(X)
 
     # the NormalizedMatrix type guarantees values in [0, 1]; assert explicitly
