@@ -1,11 +1,9 @@
 [project]
 name = "normi"
-version = "0.2.1"
+version = "0.3.0"
 description = "Estimator for Normalized Mutual Information"
 readme = "README.md"
-authors = [
-    { name = "braniii" }
-]
+authors = [{ name = "braniii" }]
 requires-python = ">=3.10"
 license = "MIT"
 keywords = [
@@ -15,19 +13,19 @@ keywords = [
     "KSG Estimator",
 ]
 classifiers = [
-  "License :: OSI Approved :: MIT License",
-  "Intended Audience :: Science/Research",
-  "Natural Language :: English",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
-  "Topic :: Scientific/Engineering :: Bio-Informatics",
-  "Topic :: Scientific/Engineering :: Information Analysis",
-  "Topic :: Scientific/Engineering :: Physics",
-  "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
     "numpy>=1.21.0",
@@ -55,9 +53,7 @@ build-backend = "hatchling.build"
 packages = ["src/normi"]
 
 [tool.hatch.build.targets.sdist]
-exclude = [
-  "docs",
-]
+exclude = ["docs"]
 
 [tool.pytest.ini_options]
 testpaths = ["src", "tests"]
